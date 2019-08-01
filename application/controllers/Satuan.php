@@ -7,6 +7,7 @@ class Satuan extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        is_logged_in();
         $this->load->model('Satuan_model');
         $this->load->library('form_validation');
     }
@@ -20,13 +21,13 @@ class Satuan extends CI_Controller
         $this->form_validation->set_rules('nama_satuan', 'satuan', 'trim|required');
 
         if ($this->form_validation->run() == false) {
-            $this->load->view('templates/master_header');
+            $this->load->view('templates/header');
             $this->load->view('superadmin/satuan/edit', $data);
-            $this->load->view('templates/master_footer');
+            $this->load->view('templates/footer');
         } else {
             $this->Satuan_model->EditSatuan();
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="success">Success Edit Satuan!</div>');
-            redirect('masterbarang/create');
+            redirect('masterbarang/modalsatuan');
         }
     }
 
@@ -34,6 +35,6 @@ class Satuan extends CI_Controller
     {
         $this->Satuan_model->HapusSatuan($id);
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="success">Success Delete Satuan!</div>');
-        redirect('masterbarang/create');
+        redirect('masterbarang/modalsatuan');
     }
 }

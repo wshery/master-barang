@@ -7,6 +7,7 @@ class Kategori extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        is_logged_in();
         $this->load->model('Kategori_model');
         $this->load->library('form_validation');
     }
@@ -20,9 +21,9 @@ class Kategori extends CI_Controller
         $this->form_validation->set_rules('nama_kategori', 'Kategori', 'trim|required');
 
         if ($this->form_validation->run() == false) {
-            $this->load->view('templates/master_header');
+            $this->load->view('templates/header');
             $this->load->view('superadmin/kategori/edit', $data);
-            $this->load->view('templates/master_footer');
+            $this->load->view('templates/footer');
         } else {
             $this->Kategori_model->EditKategori();
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="success">Success Edit Kategori!</div>');

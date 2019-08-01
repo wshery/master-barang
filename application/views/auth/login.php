@@ -44,7 +44,7 @@
                         </span>
                     </span>
                     <p>Don't have an account yet? <a href="<?= base_url('auth/register') ?>">Register!</a>
-                        <br />Forgot Your Password? <a href="#">Make new password!</a>
+                        <!-- <br />Forgot Your Password? <a href="#">Make new password!</a> -->
                 </form>
             </div>
         </div>

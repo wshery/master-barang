@@ -1,10 +1,76 @@
+<aside id="sidebar-left" class="sidebar-left">
+
+    <div class="sidebar-header">
+        <div class="sidebar-title">
+            <span style="color: white">Navigation</span>
+        </div>
+        <div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
+            <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+        </div>
+    </div>
+
+    <div class="nano">
+        <div class="nano-content">
+            <nav id="menu" class="nav-main" role="navigation">
+                <ul class="nav nav-main">
+                    <li>
+                        <a href="<?= base_url('superadmin'); ?>">
+                            <i class="fa fa-home" aria-hidden="true"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-active">
+                        <a href="<?= site_url('masterbarang/index'); ?>">
+                            <i class="fa fa-cube" aria-hidden="true"></i>
+                            <span>Master Barang</span>
+                        </a>
+                    </li>
+                    <li class="nav-parent">
+                        <a>
+                            <i class="fa fa-cubes" aria-hidden="true"></i>
+                            <span>Stock</span>
+                        </a>
+                        <ul class="nav nav-children">
+                            <li>
+                                <a href="<?php echo base_url() . '/StockInController' ?>">
+                                    Stock In
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<php echo base_url().'/StockOutController' ?>">
+                                    Stock Out
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-header">
+                <div class="sidebar-title">
+                    <span style="color: white">User</span>
+                </div>
+            </div>
+            <nav id="menu" class="nav-main" role="navigation">
+                <ul class="nav nav-main">
+                    <li>
+                        <a href="<?= base_url('user') ?>">
+                            <i class="fa fa-child" aria-hidden="true"></i>
+                            <span>Managament User</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</aside>
 <section class="body">
 
     <!-- start: header -->
     <header class="header">
         <div class="logo-container">
             <a href="../" class="logo">
-                <img src="<?php echo base_url(); ?>assets/images/logo.png" height="35" alt="Porto Admin" />
+                <img src="<?= base_url('./image/Logo.png') ?>" height="35" alt="IT - Super Admin - ISJM" />
             </a>
             <div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
                 <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
@@ -18,11 +84,11 @@
             <div id="userbox" class="userbox">
                 <a href="#" data-toggle="dropdown">
                     <figure class="profile-picture">
-                        <img src="<?= base_url('assets/images/') . $user['image']; ?>" class="img-circle" />
+                        <img src="<?= base_url('./image/') . $user['image']; ?>" class="img-circle" />
                     </figure>
                     <div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@okler.com">
                         <span class="name"><?= $user['name'] ?></span>
-                        <span class="role">administrator</span>
+                        <span class="role"></span>
                     </div>
 
                     <i class="fa custom-caret"></i>
@@ -35,7 +101,7 @@
                             <a role="menuitem" tabindex="-1" href="pages-user-profile.html"><i class="fa fa-user"></i> My Profile</a>
                         </li>
                         <li>
-                            <a role="menuitem" tabindex="-1" href="<?php echo site_url() . '/LoginController' ?>"><i class="fa fa-power-off"></i> Logout</a>
+                            <a role="menuitem" tabindex="-1" href="<?= base_url('auth/logout'); ?>"><i class="fa fa-power-off"></i> logout</a>
                         </li>
                     </ul>
                 </div>
@@ -46,62 +112,6 @@
     <!-- end: header -->
 
     <div class="inner-wrapper">
-        <!-- start: sidebar -->
-        <aside id="sidebar-left" class="sidebar-left">
-
-            <div class="sidebar-header">
-                <div class="sidebar-title">
-                    <span style="color: white">Navigation</span>
-                </div>
-                <div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
-                    <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
-                </div>
-            </div>
-
-            <div class="nano">
-                <div class="nano-content">
-                    <nav id="menu" class="nav-main" role="navigation">
-                        <ul class="nav nav-main">
-                            <li>
-                                <a href="<?php echo site_url() . 'DashboardController' ?>">
-                                    <i class="fa fa-bar-chart-o" aria-hidden="true"></i>
-                                    <span>Dashboard</span>
-                                </a>
-                            </li>
-                            <li class="nav-active">
-                                <a href="<?php echo base_url() . '/MasterBarangController' ?>">
-                                    <i class="fa fa-cube" aria-hidden="true"></i>
-                                    <span>Master Barang</span>
-                                </a>
-                            </li>
-                            <li class="nav-parent">
-                                <a>
-                                    <i class="fa fa-cubes" aria-hidden="true"></i>
-                                    <span>Stock</span>
-                                </a>
-                                <ul class="nav nav-children">
-                                    <li>
-                                        <a href="<?php echo base_url() . '/StockInController' ?>">
-                                            Stock In
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="<php echo base_url().'/StockOutController' ?>">
-                                            Stock Out
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </nav>
-
-                    <hr class="separator" />
-                </div>
-
-            </div>
-
-        </aside>
-        <!-- end: sidebar -->
 
         <section role="main" class="content-body">
             <header class="page-header">
@@ -110,11 +120,11 @@
                 <div class="right-wrapper pull-right" style="padding-right: 3%;">
                     <ol class="breadcrumbs">
                         <li>
-                            <a href="<?php echo site_url() . '/DashboardController' ?>">
+                            <a href="<?php echo site_url() . '/dashboard' ?>">
                                 <i class="fa fa-home"></i>
                             </a>
                         </li>
-                        <li><span>Master Barang</span></li>
+                        <li><span>Management User</span></li>
                         <li><span>Add</span></li>
                     </ol>
                 </div>
@@ -138,12 +148,12 @@
                         </header>
                         <div class="panel-body">
                             <?= $this->session->flashdata('message'); ?>
-                            <form action="" method="post" enctype="multipart/form-data">
+                            <form action="<?php echo site_url('Masterbarang/store'); ?>" method="post" enctype="multipart/form-data">
                                 <div class="row form-group">
                                     <input type="text" name="masterbarang" value="0" hidden>
                                     <div class="col-sm-6">
                                         <label>Kode Barang</label>
-                                        <input type="text" name="kode_barang" id="kode_barang" placeholder="ex : PSU" maxlgth="8en" class="form-control">
+                                        <input type="text" name="kode_barang" id="kode_barang" placeholder="ex : PSU" maxlgth="8en" class="form-control" onkeyup="this.value = this.value.toUpperCase();">
                                         <?= form_error('kode_barang', '<small class="text-danger pl-3">', '</small>') ?>
                                     </div>
 
@@ -165,9 +175,9 @@
                                             Tambah Kategori
                                         </button>
                                         <select data-plugin-selectTwo class="form-control populate" id="kategori" name="kategori">
-                                            <option value="Elektronik">Elektronik</option>
-                                            <option value="Alat Tulis">Alat Tulis</option>
-                                            <option value="Printer">Printer</option>
+                                            <?php foreach ($kategori as $k) : ?>
+                                                <option value="<?= $k['nama_kategori'] ?>"><?= $k['nama_kategori'] ?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
                                     <div class="col-sm-6">
@@ -179,8 +189,9 @@
                                             </a>
                                         </label>
                                         <select data-plugin-selectTwo class="form-control populate" id="satuan" name="satuan">
-                                            <option value="PCS">PCS</option>
-                                            <option value="Butir">Butir</option>
+                                            <?php foreach ($satuan as $s) : ?>
+                                                <option value="<?= $s['nama_satuan'] ?>"><?= $s['nama_satuan'] ?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </div>
@@ -197,6 +208,14 @@
                                         <label>Nomor Produk</label>
                                         <input type="text" name="nomor_produk" id="nomor_produk" placeholder="ex : AZS0091AS" class="form-control" onkeyup="this.value = this.value.toUpperCase();">
                                         <?= form_error('nomor_produk', '<small class="text-danger pl-3">', '</small>') ?>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label>Harga Produk</label>
+                                        <input type="text" name="harga" id="harga" placeholder="masukan harga barang" class="form-control">
+                                        <?= form_error('harga', '<small class="text-danger pl-3">', '</small>') ?>
                                     </div>
                                 </div>
                                 <br />

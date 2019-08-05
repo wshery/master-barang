@@ -130,56 +130,46 @@
 
     <!-- start: header -->
     <header class="header">
-      <div class="logo-container">
-        <a href="../" class="logo">
-          <img src="<?php echo base_url(); ?>assets/images/logo.png" height="35" alt="Porto Admin" />
-        </a>
-        <div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
-          <i class="fa fa-bars" aria-label="Toggle sidebar">
-          </i>
-        </div>
-      </div>
-
-      <!-- start: search & user box -->
-      <div class="header-right">
-        <span class="separator">
-        </span>
-        <div id="userbox" class="userbox">
-          <a href="#" data-toggle="dropdown">
-            <figure class="profile-picture">
-              <img src="<?= base_url('assets/images/') . $user['image']; ?>" class="img-circle" />
-            </figure>
-            <div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@okler.com">
-              <span class="name">
-                <?= $user['name'] ?>
-              </span>
-              <span class="role">administrator
-              </span>
+        <div class="logo-container">
+            <a href="../" class="logo">
+                <img src="<?= base_url('./image/Logo.png') ?>" height="35" alt="IT - Super Admin - ISJM" />
+            </a>
+            <div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
+                <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
             </div>
-            <i class="fa custom-caret">
-            </i>
-          </a>
-          <div class="dropdown-menu">
-            <ul class="list-unstyled">
-              <li class="divider">
-              </li>
-              <li>
-                <a role="menuitem" tabindex="-1" href="<?= site_url('superadmin/profile'); ?>">
-                  <i class="fa fa-user">
-                  </i> My Profile
-                </a>
-              </li>
-              <li>
-                <a role="menuitem" tabindex="-1" href="<?= base_url('auth/logout'); ?>">
-                  <i class="fa fa-power-off">
-                  </i> logout
-                </a>
-              </li>
-            </ul>
-          </div>
         </div>
-      </div>
-      <!-- end: search & user box -->
+        <!-- start: search & user box -->
+        <div class="header-right" style="padding-right: 2%;">
+
+            <span class="separator"></span>
+
+            <div id="userbox" class="userbox" style="margin-right: -2%;">
+                <a href="#" data-toggle="dropdown">
+                    <figure class="profile-picture">
+                        <img src="<?= base_url('./image/') . $user['image']; ?>" class="img-circle" />
+                    </figure>
+                    <div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@okler.com">
+                        <span class="name"><?= $user['name'] ?></span>
+                        <span class="role"></span>
+                    </div>
+
+                    <i class="fa custom-caret"></i>
+                </a>
+
+                <div class="dropdown-menu">
+                    <ul class="list-unstyled">
+                        <li class="divider"></li>
+                        <li>
+                            <a role="menuitem" tabindex="-1" href="<?= site_url('superadmin/profile'); ?>"><i class="fa fa-user"></i> My Profile</a>
+                        </li>
+                        <li>
+                            <a role="menuitem" tabindex="-1" href="<?= base_url('auth/logout'); ?>"><i class="fa fa-power-off"></i> logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- end: search & user box -->
     </header>
     <!-- end: header -->
 
@@ -391,7 +381,8 @@
 
                   
                           <!-- -- -->
-                          <input type="submit" name="submit" id="submit" class="btn btn-info" value="Submit" />  
+                          <input type="submit" name="submit" id="submit" class="btn btn-info" value="Tambah" />  
+                          <a href="<?= base_url('stockout')?>" class="btn btn-warning">Kembali</a>
                </form>
 
                <!-- modal -->

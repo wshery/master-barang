@@ -278,7 +278,7 @@
                         <div class="panel-body">
                             <form action="<?php echo site_url('masterbarang/createsatuan'); ?>" method="post">
                                 <label>Satuan</label>
-                                <input type="text" name="nama_satuan" id="nama_satuan" placeholder="Masukan Satuan" class="form-control" onkeyup="this.value = this.value.toUpperCase();">
+                                <textarea name="nama_satuan" id="nama_satuan" placeholder="Masukan Satuan" class="form-control" onkeyup="this.value = this.value.toUpperCase();"></textarea>
                                 <?= form_error('nama_satuan', '<small class="text-danger pl-3">', '</small>') ?>
                                 <br />
                                 <button type="submit" name="btn" class="btn-sm btn btn-primary">Add</button>

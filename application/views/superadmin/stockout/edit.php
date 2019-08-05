@@ -2,7 +2,14 @@
 
     <!-- start: header -->
     <header class="header">
-        <i class="fa fa-share-alt-square" style="margin-left: 2%; font-size: 45px; color: blue"> IT IJSM</i>
+        <div class="logo-container">
+            <a href="../" class="logo">
+                <img src="<?= base_url('./image/Logo.png') ?>" height="35" alt="IT - Super Admin - ISJM" />
+            </a>
+            <div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
+                <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+            </div>
+        </div>
         <!-- start: search & user box -->
         <div class="header-right" style="padding-right: 2%;">
 

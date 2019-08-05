@@ -88,7 +88,7 @@
                     </figure>
                     <div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@okler.com">
                         <span class="name"><?= $user['name'] ?></span>
-                        <span class="role"><?= $role['role'] ?></span>
+                        <span class="role"></span>
                     </div>
 
                     <i class="fa custom-caret"></i>

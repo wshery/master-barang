@@ -32,12 +32,12 @@
                         </a>
                         <ul class="nav nav-children">
                             <li>
-                                <a href="<?php echo base_url() . '/StockInController' ?>">
+                                <a href="<?php echo base_url('stockin') ?>">
                                     Stock In
                                 </a>
                             </li>
                             <li>
-                                <a href="<php echo base_url().'/StockOutController' ?>">
+                                <a href="<?php echo base_url('stokout') ?>">
                                     Stock Out
                                 </a>
                             </li>
@@ -153,6 +153,7 @@
                         <div class="panel-body">
                             <?= $this->session->flashdata('message'); ?>
                             <form action="<?= base_url('user/editUser') ?>" method="post" enctype="multipart/form-data">
+                                <input type="hidden" name="id" value="<?= $userm['id']; ?>">
                                 <div class="row form-group">
                                     <!-- <input type="text" name="masterbarang" value="0" hidden> -->
                                     <div class="col-sm-6">

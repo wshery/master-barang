@@ -32,7 +32,7 @@
                     <div class="panel-body">
                         Template Excel : <a style="margin-left: 1%;" href="<?php echo base_url("excel/Master Barang.xlsx"); ?>" class="mb-xs mt-xs mr-xs btn btn-sm btn-default">
                             <i class="fa fa-print"></i>&nbsp;
-                            Print
+                            Export
                         </a><b>.xlsx</b>
                         <!-- Buat sebuah tag form dan arahkan action nya ke controller ini lagi -->
                         <form method="post" action="<?php echo base_url("masterbarang/form"); ?>" enctype="multipart/form-data">

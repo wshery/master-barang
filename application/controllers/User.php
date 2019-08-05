@@ -101,7 +101,7 @@ class User extends CI_Controller
             $this->load->view('superadmin/user/edit', $data);
             $this->load->view('templates/footer');
         } else {
-            $this->Masterbarang_model->EditMasterbarang();
+            $this->User_model->EditUser();
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="success">Success Edit Barang!</div>');
             redirect('user/index');
         }

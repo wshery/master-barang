@@ -20,7 +20,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="<?= site_url('masterbarang/index'); ?>">
+                        <a href="<?= base_url('masterbarang'); ?>">
                             <i class="fa fa-cube" aria-hidden="true"></i>
                             <span>Master Barang</span>
                         </a>
@@ -32,12 +32,12 @@
                         </a>
                         <ul class="nav nav-children">
                             <li>
-                                <a href="<?php echo base_url() . '/StockInController' ?>">
+                                <a href="<?php echo base_url('stockin') ?>">
                                     Stock In
                                 </a>
                             </li>
                             <li>
-                                <a href="<php echo base_url().'/StockOutController' ?>">
+                                <a href="<?= base_url('stockout') ?>">
                                     Stock Out
                                 </a>
                             </li>

@@ -32,12 +32,12 @@
                         </a>
                         <ul class="nav nav-children">
                             <li>
-                                <a href="<?php echo base_url() . '/StockInController' ?>">
+                                <a href="<?php echo base_url('stockin') ?>">
                                     Stock In
                                 </a>
                             </li>
                             <li>
-                                <a href="<php echo base_url().'/StockOutController' ?>">
+                                <a href="<?php echo base_url('stokout') ?>">
                                     Stock Out
                                 </a>
                             </li>

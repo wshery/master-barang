@@ -45,6 +45,7 @@ class Masterbarang extends CI_Controller
     public function form()
     {
         $aku = $this->session->userdata('name');
+        $aku['title'] = "Form Import | Export";
         $data = array(); // Buat variabel $data sebagai array
 
         if (isset($_POST['preview'])) { // Jika user menekan tombol Preview pada form
@@ -70,7 +71,7 @@ class Masterbarang extends CI_Controller
         // $data['user'] = $this->db->get_where('user', ['email' =>
         // $this->session->userdata('email')])->row_array();
 
-        $this->load->view('templates/header');
+        $this->load->view('templates/header', $aku);
         $this->load->view('superadmin/masterbarang/form', $data, $aku);
         $this->load->view('templates/footer');
     }

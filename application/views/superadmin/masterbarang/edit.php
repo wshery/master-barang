@@ -32,12 +32,12 @@
                         </a>
                         <ul class="nav nav-children">
                             <li>
-                                <a href="<?php echo base_url() . '/StockInController' ?>">
+                                <a href="<?php echo base_url('stockin') ?>">
                                     Stock In
                                 </a>
                             </li>
                             <li>
-                                <a href="<php echo base_url().'/StockOutController' ?>">
+                                <a href="<?php echo base_url('stockout') ?>">
                                     Stock Out
                                 </a>
                             </li>
@@ -120,7 +120,7 @@
                 <div class="right-wrapper pull-right" style="padding-right: 3%;">
                     <ol class="breadcrumbs">
                         <li>
-                            <a href="<?php echo site_url() . '/DashboardController' ?>">
+                            <a href="<?php echo site_url() . 'masterbarang' ?>">
                                 <i class="fa fa-home"></i>
                             </a>
                         </li>
@@ -129,6 +129,10 @@
                     </ol>
                 </div>
             </header>
+
+            <div class="row">
+
+            </div>
 
             <!-- start: page -->
             <div class="row">
@@ -255,8 +259,8 @@
 
 
                                 <br />
-                                <button type="submit" name="btn" class="btn btn-primary">Edit</button>
-                                <a href="<?php echo site_url('masterbarang/index') ?>" class="btn btn-warning">Cancel</a>
+                                <button type="submit" name="btn" class="btn btn-info">Ubah</button>
+                                <a href="<?php echo site_url('masterbarang/index') ?>" class="btn btn-warning">Kembali</a>
                             </form>
                         </div>
                     </section>

@@ -32,12 +32,12 @@
                         </a>
                         <ul class="nav nav-children">
                             <li>
-                                <a href="<?php echo base_url() . '/StockInController' ?>">
+                                <a href="<?php echo base_url('stockin') ?>">
                                     Stock In
                                 </a>
                             </li>
                             <li>
-                                <a href="<php echo base_url().'/StockOutController' ?>">
+                                <a href="<?php echo base_url('stockout') ?>">
                                     Stock Out
                                 </a>
                             </li>
@@ -120,12 +120,12 @@
                 <div class="right-wrapper pull-right" style="padding-right: 3%;">
                     <ol class="breadcrumbs">
                         <li>
-                            <a href="<?php echo site_url() . '/dashboard' ?>">
+                            <a href="<?php echo site_url() . 'masterbarang' ?>">
                                 <i class="fa fa-home"></i>
                             </a>
                         </li>
-                        <li><span>Management User</span></li>
-                        <li><span>Add</span></li>
+                        <li><span>Master Barang</span></li>
+                        <li><span>Tambah</span></li>
                     </ol>
                 </div>
             </header>
@@ -214,7 +214,7 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <label>Harga Produk</label>
-                                        <input type="text" name="harga" id="harga" placeholder="masukan harga barang" class="form-control">
+                                        <input type="text" name="harga" placeholder="masukan harga barang" class="form-control">
                                         <?= form_error('harga', '<small class="text-danger pl-3">', '</small>') ?>
                                     </div>
                                 </div>
@@ -264,8 +264,8 @@
 
 
                                 <br />
-                                <button type="submit" name="btn" class="btn btn-primary">Create</button>
-                                <a href="<?php echo site_url('masterbarang/index') ?>" class="btn btn-warning">Cancel</a>
+                                <button type="submit" name="btn" class="btn btn-info">Tambah</button>
+                                <a href="<?php echo site_url('masterbarang/index') ?>" class="btn btn-warning">Kembali</a>
                             </form>
                         </div>
                     </section>

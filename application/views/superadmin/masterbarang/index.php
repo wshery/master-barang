@@ -32,12 +32,12 @@
                         </a>
                         <ul class="nav nav-children">
                             <li>
-                                <a href="<?php echo base_url() . '/StockInController' ?>">
+                                <a href="<?php echo base_url('stockin') ?>">
                                     Stock In
                                 </a>
                             </li>
                             <li>
-                                <a href="<php echo base_url().'/StockOutController' ?>">
+                                <a href="<?php echo base_url('stockout') ?>">
                                     Stock Out
                                 </a>
                             </li>
@@ -140,7 +140,6 @@
                             <h2 class="panel-title"><b>MASTER BARANG</b></h2>
                         </header>
                         <div class="panel-body">
-
                             <?= $this->session->flashdata('message'); ?>
                             <table class="table table-bordered table-striped mb-none" id="datatable-default">
                                 <div class="row show-grid">
@@ -158,79 +157,80 @@
 
                                     <div class="col-md-4">
                                         <form action="<?php echo base_url("masterbarang/import"); ?>" method="post" enctype="multipart/form-data">
-                                            <a style="margin-left: 23%;" href="<?php echo base_url("excel/Master Barang.xlsx"); ?>" class="mb-xs mt-xs mr-xs btn btn-sm btn-default">
+                                            <a style="margin-left: 20%;" href="<?php echo base_url("excel/Master Barang.xlsx"); ?>" class="mb-xs mt-xs mr-xs btn btn-sm btn-default">
                                                 <i class="fa fa-print"></i>&nbsp;
-                                                Ekspor
+                                                Export
                                             </a>
                                             <a style="margin-right: 10%; padding-right: 11%;" href="<?php echo base_url("masterbarang/form"); ?>" class="mb-xs mt-xs mr-xs btn btn-sm btn-success"><i class="fa fa-file-text"></i>&nbsp; Import Data Excel</a><br><br>
                                         </form>
                                     </div>
                                 </div>
+
+                                <br />
+                                <thead>
+                                    <tr>
+                                        <th>action</th>
+                                        <th>No</th>
+                                        <th>Kode Barang</th>
+                                        <th>Nama Barang</th>
+                                        <th>Kategori</th>
+                                        <th>Kondisi Barang</th>
+                                        <th>Nomor Serial</th>
+                                        <th>Nomor Produk</th>
+                                        <th>Keterangan Barang</th>
+                                        <th>Batas</th>
+                                        <th>Satuan</th>
+                                        <th>Harga</th>
+                                        <th>Photo</th>
+                                        <th>action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <?php
+                                    $no = 1;
+                                    foreach ($mbarang as $barang) {
+                                        ?>
+                                        <tr class="gradeX">
+                                            <td><input type="checkbox" id="<?= $barang['id']; ?>" name="id[]" value="<?= $barang['id']; ?>"></td>
+                                            <td><?= $no++; ?></td>
+                                            <td><?= $barang['kode_barang']; ?></td>
+                                            <td><?= $barang['nama_barang'] ?></td>
+                                            <td><?= $barang['nama_kategori'] ?></td>
+                                            <td><?= $barang['kondisi_barang'] ?></td>
+                                            <td><?= $barang['nomor_serial'] ?></td>
+                                            <td><?= $barang['nomor_produk'] ?></td>
+                                            <td><?= $barang['keterangan_barang'] ?></td>
+                                            <td><?= $barang['batas'] ?></td>
+                                            <td><?= $barang['nama_satuan'] ?></td>
+                                            <td><?= "Rp." . number_format($barang['harga'], 2, ',', '.') ?></td>
+                                            <td>
+                                                <?php
+                                                if (file_exists('./image/' . $barang['photo']) == FALSE) {
+                                                    echo "<b style='color: #00FF00'>" . $barang['photo'] . "</b>";
+                                                } elseif ($barang['photo'] == null) {
+                                                    echo "<i>Gambar Kosong</i>";
+                                                } else {
+                                                    ?>
+                                                    <img src="<?= base_url('./image/') . $barang['photo']; ?>" width='75px' hegiht='75px' />
+                                                <?php } ?>
+
+                                            </td>
+                                            <td>
+                                                <a href="<?= base_url(''); ?>masterbarang/edit/<?= $barang['id']; ?>">
+                                                    <i class="fa fa-edit"></i>
+                                                </a> |
+                                                <a href="<?= base_url(''); ?>masterbarang/delete/<?php echo $barang['id']; ?>" onclick="return confirm('Sure want delete this data?')">
+                                                    <i class="fa fa-trash-o"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
                         </div>
+                    </section>
                 </div>
-                <br />
-                <thead>
-                    <tr>
-                        <th>action</th>
-                        <th>No</th>
-                        <th>Kode Barang</th>
-                        <th>Nama Barang</th>
-                        <th>Kategori</th>
-                        <th>Kondisi Barang</th>
-                        <th>Nomor Serial</th>
-                        <th>Nomor Produk</th>
-                        <th>Keterangan Barang</th>
-                        <th>Batas</th>
-                        <th>Satuan</th>
-                        <th>Harga</th>
-                        <th>Photo</th>
-                        <th>action</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <?php
-                    $no = 1;
-                    foreach ($mbarang as $barang) {
-                        ?>
-                        <tr class="gradeX">
-                            <td><input type="checkbox" id="<?= $barang['id']; ?>" name="id[]" value="<?= $barang['id']; ?>"></td>
-                            <td><?= $no++; ?></td>
-                            <td><?= $barang['kode_barang']; ?></td>
-                            <td><?= $barang['nama_barang'] ?></td>
-                            <td><?= $barang['nama_kategori'] ?></td>
-                            <td><?= $barang['kondisi_barang'] ?></td>
-                            <td><?= $barang['nomor_serial'] ?></td>
-                            <td><?= $barang['nomor_produk'] ?></td>
-                            <td><?= $barang['keterangan_barang'] ?></td>
-                            <td><?= $barang['batas'] ?></td>
-                            <td><?= $barang['nama_satuan'] ?></td>
-                            <td><?= $barang['harga'] ?>
-                            <td>
-                                <?php
-                                if (file_exists('./image/' . $barang['photo']) == FALSE) {
-                                    echo "<b style='color: #00FF00'>" . $barang['photo'] . "</b>";
-                                } elseif ($barang['photo'] == null) {
-                                    echo "<i>Gambar Kosong</i>";
-                                } else {
-                                    ?>
-                                    <img src="<?= base_url('./image/') . $barang['photo']; ?>" width='75px' hegiht='75px' />
-                                <?php } ?>
-
-                            </td>
-                            <td>
-                                <a href="<?= base_url(''); ?>masterbarang/edit/<?= $barang['id']; ?>">
-                                    <i class="fa fa-edit"></i>
-                                </a> |
-                                <a href="<?= base_url(''); ?>masterbarang/delete/<?php echo $barang['id']; ?>" onclick="return confirm('Sure want delete this data?')">
-                                    <i class="fa fa-trash-o"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    <?php } ?>
-                </tbody>
-                </table>
-
             </div>
         </section>
     </div>

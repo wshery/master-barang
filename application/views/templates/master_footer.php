@@ -148,6 +148,44 @@
     });
 </script>
 
+<script>
+    $(document).ready(function() {
+        $("#myModal3").modal("show");
+
+        $("#myBtn").click(function() {
+            $("#myModal3").modal("hide");
+        });
+
+        $("#myModal2").on('hide.bs.modal', function() {
+            var backConfirm = confirm("You Want Go Back?");
+            if (backConfirm == true) {
+                window.location.href = '<?php echo site_url('stokout/create') ?>';
+            } else {
+                window.location.href = '<?php echo site_url('stokout/modalpengeluar') ?>';
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $("#myModal4").modal("show");
+
+        $("#myBtn").click(function() {
+            $("#myModal4").modal("hide");
+        });
+
+        $("#myModal4").on('hide.bs.modal', function() {
+            var backConfirm = confirm("You Want Go Back?");
+            if (backConfirm == true) {
+                window.location.href = '<?php echo site_url('stokout/create') ?>';
+            } else {
+                window.location.href = '<?php echo site_url('stokout/modalsupir') ?>';
+            }
+        });
+    });
+</script>
+
 </body>
 
 </html>

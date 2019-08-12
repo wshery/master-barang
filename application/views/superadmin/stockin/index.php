@@ -131,48 +131,6 @@
 				</div>
 			</header>
 
-			<div class="row">
-				<div class="col-xs-12">
-					<section class="panel">
-						<header class="panel-heading">
-							<div class="panel-actions">
-								<a href="#" class="fa fa-caret-down"></a>
-							</div>
-							<h2 class="panel-title"><b>STOCK MASUK</b></h2>
-						</header>
-						<div class="panel-body">
-							<table id="datatable-default" class="table table-bordered table-stripped mb-none">
-								<p class="m-none">
-									<a href="<?= site_url('stockin/create') ?>" type="button" class=" mb-xs mt-xs btn btn-sm btn-primary">
-										<i class="fa fa-plus"></i>&nbsp;
-										Stok Masuk
-									</a>
-								</p>
-								<br />
-								<thead>
-									<tr>
-										<th>Nama Barang</th>
-										<th>Total Masuk Barang</th>
-									</tr>
-								</thead>
-								<tbody>
-									<?php
-									$no = 1;
-
-									foreach ($stkbrg as $in) {
-										?>
-										<tr class="gradeX">
-											<td><?= $in->nama_barangs; ?></td>
-											<td><?= $in->total; ?></td>
-										</tr>
-									<?php } ?>
-								</tbody>
-							</table>
-						</div>
-					</section>
-				</div>
-			</div>
-
 			<!-- start: page -->
 			<div class="row">
 				<div class="col-xs-12">
@@ -187,19 +145,25 @@
 						<div class="panel-body">
 							<?= $this->session->flashdata('message'); ?>
 							<form action="<?php echo base_url("stockin/import"); ?>" method="post" enctype="multipart/form-data">
-								<a href="<?php echo base_url("excel/Stockin.xlsx"); ?>" class="mb-xs mt-xs mr-xs btn btn-sm btn-default">
+								<a href="<?= site_url('stockin/create') ?>" type="button" class=" mb-xs mt-xs btn btn-sm btn-primary">
+									<i class="fa fa-plus"></i>&nbsp;
+									Stok Masuk
+								</a>
+								<a style="margin-left: 67%;" href="<?php echo base_url("excel/Stockin.xlsx"); ?>" class="mb-xs mt-xs mr-xs btn btn-sm btn-default">
 									<i class="fa fa-print"></i>&nbsp;
 									Export
 								</a>
 								<a style="margin-right: 10%;" href="<?= base_url("stockin/form"); ?>" class="mb-xs mt-xs mr-xs btn btn-sm btn-success"><i class="fa fa-file-text"></i>&nbsp; Import Data Excel</a><br><br>
 							</form>
-							<table class="table table-bordered table-striped mb-none" id="datatable-tabletools">
+							<table id="datatable-default" class="table table-bordered table-stripped mb-none">
 								<p class=" m-none">
 								</p>
 								<br />
 								<thead>
 									<tr>
 										<th>Tanggal Barang</th>
+										<th>Dari Proyek</th>
+										<th>Kode Barang</th>
 										<th>Nama Barang</th>
 										<th>Jumlah Barang</th>
 										<th>Keterangan Barang</th>
@@ -215,8 +179,10 @@
 										?>
 										<tr class="gradeX">
 											<td><?= $in['tanggal_masuk']; ?></td>
+											<td><?= $in['lokasi']; ?></td>
+											<td><?= $in['kode_barang']; ?></td>
 											<td><?= $in['nama_barang']; ?></td>
-											<td><?= $in['jumlah_masuk']; ?></td>
+											<td><?= $in['jumlah_masuk'] . ' ' . $in['unit']; ?></td>
 											<td><?= $in['keterangan']; ?></td>
 											<td><?php
 												if (file_exists('./image/' . $in['lampiran']) == FALSE) {

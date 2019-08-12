@@ -10,19 +10,19 @@
                 <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
             </div>
         </div>
+
         <!-- start: search & user box -->
         <div class="header-right" style="padding-right: 2%;">
-
             <span class="separator"></span>
 
             <div id="userbox" class="userbox" style="margin-right: -2%;">
                 <a href="#" data-toggle="dropdown">
                     <figure class="profile-picture">
-                        <img src="<?= base_url('assets/images/') . $user['image']; ?>" class="img-circle" />
+                        <img src="<?= base_url('./image/') . $user['image']; ?>" class="img-circle" />
                     </figure>
                     <div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@okler.com">
                         <span class="name"><?= $user['name'] ?></span>
-                        <span class="role">administrator</span>
+                        <span class="role"></span>
                     </div>
 
                     <i class="fa custom-caret"></i>
@@ -74,14 +74,14 @@
                                     <span>Master Barang</span>
                                 </a>
                             </li>
-                            <li class="nav-parent nav-expanded nav-active">
+                            <li class="nav-parent nav-active">
                                 <a>
                                     <i class="fa fa-cubes" aria-hidden="true"></i>
                                     <span>Stock</span>
                                 </a>
                                 <ul class="nav nav-children">
                                     <li>
-                                        <a href="<?= site_url('stokin'); ?>">
+                                        <a href="<?= site_url('stockin'); ?>">
                                             Stock In
                                         </a>
                                     </li>
@@ -157,39 +157,39 @@
                                 <input type="hidden" name="id" value="<?= $stockout['id_out']; ?>">
                                 <div class="row form-group">
                                     <div class="col-md-6">
-                                        <label>Nama Barang
-                                            <font color="red">*</font></label>
+                                      <label>Nama Barang
+                                        <font color="red">*</font></label>
                                         <input type="" name="" disabled="" value="<?= $stockout['nama_barang']; ?>" class="form-control input-sm" />
                                     </div>
 
                                     <div class="col-md-5">
-                                        <label>Quantity out
-                                        </label>
-                                        <input type="" name="" disabled="" value="<?= $stockout['jumlah']; ?>" class="form-control input-sm" />
+                                      <label>Quantity out
+                                      </label>
+                                      <input type="" name="" disabled="" value="<?= $stockout['jumlah']; ?>" class="form-control input-sm" />
                                     </div>
                                 </div>
                                 <div class="row form-group">
                                     <div class="col-md-6">
-                                        <select name="nama_barang" id="nama_barang" data-plugin-selectTwo class="form-control input-sm populate name_list">
-                                            <?php foreach ($mbarang as $barang) : ?> {
-                                                <option value="<?= $barang['nama_barang']  ?>"><?= $barang['nama_barang'] ?></option>
-                                            <?php endforeach; ?>
-                                        </select>
+                                        <select name="nama_barang" id="nama_barang" data-plugin-selectTwo class="form-control input-sm populate name_list" >
+                                        <?php foreach ($mbarang as $barang) : ?> {
+                                            <option value="<?= $barang['nama_barang']  ?>"><?= $barang['nama_barang'] ?></option>
+                                        <?php endforeach; ?>
+                                      </select>
                                     </div>
                                     <div class="col-md-5">
-                                        <input type="" name="quantity_out" id="quantity_out" placeholder="ex : 10" class="form-control input-sm" />
-                                        <?= form_error('quantity_out', '<small class="text-danger pl-3">', '</small>') ?>
+                                      <input type="" name="quantity_out" id="quantity_out" placeholder="ex : 10" class="form-control input-sm" />
+                                      <?= form_error('quantity_out', '<small class="text-danger pl-3">', '</small>') ?>
                                     </div>
                                 </div>
                                 <div class="form-group mb-lg">
-                                    <label>Lokasi</label>
-                                    <input type="" name="" disabled="" value="<?= $stockout['lokasi']; ?>" class="form-control input-sm" />
-                                    <br>
-                                    <select name="lokasi" data-plugin-selectTwo class="form-control input-sm populate name_list">
-                                        <?php foreach ($lokasi as $l) : ?> {
-                                            <option value="<?= $l['nama_lokasi']  ?>"><?= $l['nama_lokasi'] ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
+                                  <label>Lokasi</label>
+                                  <input type="" name="" disabled="" value="<?= $stockout['lokasi']; ?>" class="form-control input-sm" />
+                                  <br>
+                                  <select name="lokasi"  data-plugin-selectTwo class="form-control input-sm populate name_list">
+                                    <?php foreach ($lokasi as $l) : ?> {
+                                        <option value="<?= $l['nama_lokasi']  ?>"><?= $l['nama_lokasi'] ?></option>
+                                    <?php endforeach; ?>
+                                  </select>
                                 </div>
                                 <!-- <div class="form-group mb-lg">
                                   <label>No Surat Jalan</label>
@@ -205,12 +205,12 @@
                                 </div> -->
 
                                 <div class="form-group mb-lg ">
-                                    <label>Keterangan Barang
-                                        <b>(optional)
-                                        </b>
-                                    </label>
-                                    <textarea name="keterangan" id="keterangan" rows="2" class="form-control" placeholder="Keterangan Barang" required></textarea>
-                                    <?= form_error('nolast_suratjalan', '<small class="text-danger pl-3">', '</small>') ?>
+                                  <label>Keterangan Barang 
+                                    <b>(optional)
+                                    </b> 
+                                  </label>
+                                  <textarea name="keterangan" id="keterangan" rows="2" class="form-control" placeholder="Keterangan Barang" required></textarea>
+                                  <?= form_error('nolast_suratjalan', '<small class="text-danger pl-3">', '</small>') ?>
                                 </div>
                                 <br />
                                 <br />
@@ -222,7 +222,7 @@
                 </div>
             </div>
             <!-- end: page -->
-
-        </section>
-    </div>
+            
+            </section>
+        </div>
 </section>

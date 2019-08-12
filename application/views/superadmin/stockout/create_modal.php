@@ -129,33 +129,29 @@
   <body data-spy="scroll" data-target="#myScrollspy" data-offset="20">
 
     <!-- start: header -->
-    <header class="header">
-      <div class="logo-container">
-        <a href="../" class="logo">
-          <img src="<?php echo base_url(); ?>assets/images/logo.png" height="35" alt="Porto Admin" />
-        </a>
-        <div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
-          <i class="fa fa-bars" aria-label="Toggle sidebar">
-          </i>
-        </div>
+  <header class="header">
+    <div class="logo-container">
+      <a href="../" class="logo">
+        <img src="<?= base_url('./image/Logo.png') ?>" height="35" alt="IT - Super Admin - ISJM" />
+      </a>
+      <div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
+        <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
       </div>
+    </div>
 
-      <!-- start: search & user box -->
-      <div class="header-right">
-        <span class="separator">
-        </span>
-        <div id="userbox" class="userbox">
-          <a href="#" data-toggle="dropdown">
-            <figure class="profile-picture">
-              <img src="<?= base_url('assets/images/') . $user['image']; ?>" class="img-circle" />
-            </figure>
-            <div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@okler.com">
-              <span class="name">
-                <?= $user['name'] ?>
-              </span>
-              <span class="role">administrator
-              </span>
-            </div>
+    <!-- start: search & user box -->
+    <div class="header-right" style="padding-right: 2%;">
+      <span class="separator"></span>
+
+      <div id="userbox" class="userbox" style="margin-right: -2%;">
+        <a href="#" data-toggle="dropdown">
+          <figure class="profile-picture">
+            <img src="<?= base_url('./image/') . $user['image']; ?>" class="img-circle" />
+          </figure>
+          <div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@okler.com">
+            <span class="name"><?= $user['name'] ?></span>
+            <span class="role"></span>
+          </div>
             <i class="fa custom-caret">
             </i>
           </a>
@@ -219,7 +215,7 @@
                                 </a>
                                 <ul class="nav nav-children">
                                     <li>
-                                        <a href="<?= site_url('stokin'); ?>">
+                                        <a href="<?= site_url('stockin'); ?>">
                                             Stock In
                                         </a>
                                     </li>
@@ -349,19 +345,61 @@
                   </br>
 
                 <div class="form-group mb-lg">
-                  <label>Lokasi
-                  </label> 
-                  <button class="mb-xs mt-xs mr-xs modal-with-zoom-anim btn btn-default btn btn-danger btn-xs" 
-                          href="#lokasi" id="addToTable" >
-                    <i class="fa fa-map-marker">
-                    </i>&nbsp; Tambah Lokasi
-                  </button>
-                  <select name="lokasi"  data-plugin-selectTwo class="form-control input-sm populate name_list">
-                    <?php foreach ($lokasi as $l) : ?> {
-                        <option value="<?= $l['nama_lokasi']  ?>"><?= $l['nama_lokasi'] ?></option>
-                    <?php endforeach; ?>
-                  </select>
-                </div>
+                    <label>Lokasi Tujuan</label> 
+
+                    <button class="mb-xs mt-xs mr-xs modal-with-zoom-anim btn btn-default btn btn-danger btn-xs" 
+                    href="#lokasi" id="addToTable" >
+                    <i class="fa fa-map-marker"></i>&nbsp; Tambah Lokasi Tujuan
+                    </button>
+                    <select name="lokasi"  data-plugin-selectTwo class="form-control input-sm populate name_list">
+                          <?php
+                      //sel master barang
+                      foreach ($lokasi as $l) {
+                      ?>
+                      <option value="<?php echo $l['nama_lokasi'] ?>">
+                        <?php echo $l['nama_lokasi']  ?>
+                      </option>
+                      <?php } ?>
+                    </select>
+                  </div>
+
+                  <div class="form-group mb-lg">
+                    <label>Dikeluarkan Oleh</label> 
+
+                    <button class="mb-xs mt-xs mr-xs modal-with-zoom-anim btn btn-default btn btn-danger btn-xs" 
+                    href="#pengeluar" id="addToTable" >
+                    <i class="fa fa-map-marker"></i>&nbsp; Tambah Pengeluar
+                    </button>
+                    <select name="pengeluar"  data-plugin-selectTwo class="form-control input-sm populate name_list">
+                          <?php
+                      //sel master barang
+                      foreach ($pengeluar as $lu) {
+                      ?>
+                      <option value="<?php echo $lu['nama_pengeluar'] ?>">
+                        <?php echo $lu['nama_pengeluar']  ?>
+                      </option>
+                      <?php } ?>
+                    </select>
+                  </div>
+
+                  <div class="form-group mb-lg">
+                    <label>Supir</label> 
+
+                    <button class="mb-xs mt-xs mr-xs modal-with-zoom-anim btn btn-default btn btn-danger btn-xs" 
+                    href="#supir" id="addToTable" >
+                    <i class="fa fa-map-marker"></i>&nbsp; Tambah Supir
+                    </button>
+                    <select name="supir"  data-plugin-selectTwo class="form-control input-sm populate name_list">
+                          <?php
+                      //sel master barang
+                      foreach ($supir as $sup) {
+                      ?>
+                      <option value="<?php echo $sup['nama_supir'] ?>">
+                        <?php echo $sup['nama_supir']  ?>
+                      </option>
+                      <?php } ?>
+                    </select>
+                  </div>
 
                 <div class="form-group mb-lg ">
                   <label>Keterangan Barang 
@@ -538,13 +576,13 @@
                     <div class="panel">
                         <div class="panel-heading">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h2 class="panel-title">Lokasi</h2>
+                            <h2 class="panel-title">Lokasi Tujuan</h2>
                         </div>
                         <div class="panel-body">
                           <?= $this->session->flashdata('message'); ?>
                             <form action="<?php echo site_url('stockout/createlokasi'); ?>" method="post">
                                 <label>Lokasi</label>
-                                <input type="text" name="nama_lokasi" id="nama_lokasi" placeholder="Masukan Lokasi" class="form-control" onkeyup="this.value = this.value.toUpperCase();">
+                                <input type="text" name="nama_lokasi" id="nama_lokasi" required="required" placeholder="Masukan Lokasi" class="form-control" onkeyup="this.value = this.value.toUpperCase();">
                                 <?= form_error('nama_lokasi', '<small class="text-danger pl-3">', '</small>') ?>
                                 <br />
                                 <button type="submit" name="btn" class="btn-sm btn btn-primary">Add</button>
@@ -566,10 +604,10 @@
                                     <tr>
                                         <td><?= $l['nama_lokasi'] ?></td>
                                         <td>
-                                            <a href="<?= base_url(''); ?>lokasi/edit/<?= $l['id']; ?>">
+                                            <a href="<?= base_url(''); ?>lokasi_stockout/edit/<?= $l['id']; ?>">
                                                 <i class="fa fa-edit"></i>
                                             </a> |
-                                            <a href="<?= base_url(''); ?>lokasi/delete/<?= $l['id']; ?>" onclick="return confirm('Sure want delete this data?')">
+                                            <a href="<?= base_url(''); ?>lokasi_stockout/delete/<?= $l['id']; ?>" onclick="return confirm('Sure want delete this data?')">
                                                 <i class="fa fa-trash-o"></i>
                                             </a>
                                         </td>

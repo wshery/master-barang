@@ -345,8 +345,8 @@
 										</select>
 									</div>
 									<div class="form-group mb-lg ">
-										<label>Keterangan Barang <b>(optional)</b> </label>
-										<textarea name="keterangan" placeholder="keterangan barang" class="form-control" value="
+										<label>Keterangan Barang</label>
+										<textarea name="keterangan" placeholder="Keterangan barang" class="form-control" required="required" value="
 											<?php if (empty($keterangan)) {
 												echo "";
 											} elseif (!empty($keterangan)) {

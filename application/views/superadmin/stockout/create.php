@@ -129,47 +129,53 @@
   <body data-spy="scroll" data-target="#myScrollspy" data-offset="20">
 
     <!-- start: header -->
-    <header class="header">
-        <div class="logo-container">
-            <a href="../" class="logo">
-                <img src="<?= base_url('./image/Logo.png') ?>" height="35" alt="IT - Super Admin - ISJM" />
-            </a>
-            <div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
-                <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
-            </div>
-        </div>
-        <!-- start: search & user box -->
-        <div class="header-right" style="padding-right: 2%;">
+  <header class="header">
+    <div class="logo-container">
+      <a href="../" class="logo">
+        <img src="<?= base_url('./image/Logo.png') ?>" height="35" alt="IT - Super Admin - ISJM" />
+      </a>
+      <div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
+        <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+      </div>
+    </div>
 
-            <span class="separator"></span>
+    <!-- start: search & user box -->
+    <div class="header-right" style="padding-right: 2%;">
+      <span class="separator"></span>
 
-            <div id="userbox" class="userbox" style="margin-right: -2%;">
-                <a href="#" data-toggle="dropdown">
-                    <figure class="profile-picture">
-                        <img src="<?= base_url('./image/') . $user['image']; ?>" class="img-circle" />
-                    </figure>
-                    <div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@okler.com">
-                        <span class="name"><?= $user['name'] ?></span>
-                        <span class="role"></span>
-                    </div>
-
-                    <i class="fa custom-caret"></i>
+      <div id="userbox" class="userbox" style="margin-right: -2%;">
+        <a href="#" data-toggle="dropdown">
+          <figure class="profile-picture">
+            <img src="<?= base_url('./image/') . $user['image']; ?>" class="img-circle" />
+          </figure>
+          <div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@okler.com">
+            <span class="name"><?= $user['name'] ?></span>
+            <span class="role"></span>
+          </div>
+            <i class="fa custom-caret">
+            </i>
+          </a>
+          <div class="dropdown-menu">
+            <ul class="list-unstyled">
+              <li class="divider">
+              </li>
+              <li>
+                <a role="menuitem" tabindex="-1" href="<?= site_url('superadmin/profile'); ?>">
+                  <i class="fa fa-user">
+                  </i> My Profile
                 </a>
-
-                <div class="dropdown-menu">
-                    <ul class="list-unstyled">
-                        <li class="divider"></li>
-                        <li>
-                            <a role="menuitem" tabindex="-1" href="<?= site_url('superadmin/profile'); ?>"><i class="fa fa-user"></i> My Profile</a>
-                        </li>
-                        <li>
-                            <a role="menuitem" tabindex="-1" href="<?= base_url('auth/logout'); ?>"><i class="fa fa-power-off"></i> logout</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+              </li>
+              <li>
+                <a role="menuitem" tabindex="-1" href="<?= base_url('auth/logout'); ?>">
+                  <i class="fa fa-power-off">
+                  </i> logout
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
-        <!-- end: search & user box -->
+      </div>
+      <!-- end: search & user box -->
     </header>
     <!-- end: header -->
 
@@ -283,10 +289,10 @@
             </header>
             
             <div class="panel-body">
-
+              <?= $this->session->flashdata('message'); ?>
               <!-- ss -->
               <br /> <br />
-              <?= $this->session->flashdata('message'); ?>
+              
               <form method="post" id="user_form" action="<?php echo site_url('stockout/buat'); ?>" name="user_form" >
 
                  <div class="row">
@@ -307,10 +313,10 @@
 
                                   <?php
                       //sel master barang
-                      foreach ($mbarang as $c) {
+                      foreach ($stockin as $c) {
                       ?>
-                      <option value="<?php echo $c['nama_barang'] ?>">
-                        <?php echo $c['nama_barang']  ?>
+                      <option value="<?php echo $c->nama_barang ?>">
+                        <?php echo $c->nama_barang ?>
                       </option>
                       <?php } ?>
                             </select>
@@ -350,11 +356,11 @@
                 <!-- -- -->
                   
                   <div class="form-group mb-lg">
-                    <label>Lokasi</label> 
+                    <label>Lokasi Tujuan</label> 
 
                     <button class="mb-xs mt-xs mr-xs modal-with-zoom-anim btn btn-default btn btn-danger btn-xs" 
                     href="#lokasi" id="addToTable" >
-                    <i class="fa fa-map-marker"></i>&nbsp; Tambah Lokasi
+                    <i class="fa fa-map-marker"></i>&nbsp; Tambah Lokasi Tujuan
                     </button>
                     <select name="lokasi"  data-plugin-selectTwo class="form-control input-sm populate name_list">
                           <?php
@@ -363,6 +369,44 @@
                       ?>
                       <option value="<?php echo $l['nama_lokasi'] ?>">
                         <?php echo $l['nama_lokasi']  ?>
+                      </option>
+                      <?php } ?>
+                    </select>
+                  </div>
+
+                  <div class="form-group mb-lg">
+                    <label>Dikeluarkan Oleh</label> 
+
+                    <button class="mb-xs mt-xs mr-xs modal-with-zoom-anim btn btn-default btn btn-danger btn-xs" 
+                    href="#pengeluar" id="addToTable" >
+                    <i class="fa fa-user"></i>&nbsp; Tambah Pengeluar
+                    </button>
+                    <select name="pengeluar"  data-plugin-selectTwo class="form-control input-sm populate name_list">
+                          <?php
+                      //sel master barang
+                      foreach ($pengeluar as $lu) {
+                      ?>
+                      <option value="<?php echo $lu['nama_pengeluar'] ?>">
+                        <?php echo $lu['nama_pengeluar']  ?>
+                      </option>
+                      <?php } ?>
+                    </select>
+                  </div>
+
+                  <div class="form-group mb-lg">
+                    <label>Supir</label> 
+
+                    <button class="mb-xs mt-xs mr-xs modal-with-zoom-anim btn btn-default btn btn-danger btn-xs" 
+                    href="#supir" id="addToTable" >
+                    <i class="fa fa-user"></i>&nbsp; Tambah Supir
+                    </button>
+                    <select name="supir"  data-plugin-selectTwo class="form-control input-sm populate name_list">
+                          <?php
+                      //sel master barang
+                      foreach ($supir as $sup) {
+                      ?>
+                      <option value="<?php echo $sup['nama_supir'] ?>">
+                        <?php echo $sup['nama_supir']  ?>
                       </option>
                       <?php } ?>
                     </select>
@@ -381,8 +425,7 @@
 
                   
                           <!-- -- -->
-                          <input type="submit" name="submit" id="submit" class="btn btn-info" value="Tambah" />  
-                          <a href="<?= base_url('stockout')?>" class="btn btn-warning">Kembali</a>
+                          <input type="submit" name="submit" id="submit" class="btn btn-info" value="Submit" />  
                </form>
 
                <!-- modal -->
@@ -396,10 +439,10 @@
 
                                   <?php
                       //sel master barang
-                      foreach ($mbarang as $c) {
+                      foreach ($stockin as $c) {
                       ?>
-                      <option value="<?php echo $c['nama_barang']; ?>">
-                        <?php echo $c['nama_barang'];  ?>
+                      <option value="<?php echo $c->nama_barang ?>">
+                        <?php echo $c->nama_barang  ?>
                       </option>
                       <?php } ?>
 
@@ -411,7 +454,7 @@
 
                 <div class="form-group mb-lg ">
                   <label>Jumlah Barang</label>
-                  <input name="quantity_out" id="quantity_out" type="" placeholder="masukkan jumlah" onkeypress="return hanyaAngka(event)" class="form-control input-sm"/>
+                  <input type="number" min="1" name="quantity_out" id="quantity_out" type="" placeholder="masukkan jumlah" onkeypress="return hanyaAngka(event)" class="form-control input-sm"/>
 
                   <script>
                   function hanyaAngka(evt) {
@@ -594,51 +637,46 @@
       <div id="lokasi" class="zoom-anim-dialog modal-block modal-block-primary mfp-hide">
           <section class="panel">
             <header class="panel-heading">
-              <h2 class="panel-title">Lokasi</h2>
+              <h2 class="panel-title">Lokasi Tujuan</h2>
             </header>
             <div class="panel-body">
-              <div class="modal-wrapper">
-                <form action="<?php echo site_url('stockout/create')?>" method="post">
-                  <label>lokasi</label>
-                  <input type="text" id="n22" onkeyup="n2()" name="lokasi" placeholder="masukkan lokasi"  class="form-control">
-                  
-                  <div style="margin-top: 1%;">
-                    <input type="submit" value="submit" class="btn btn-sm btn-primary">
-                  </div>
-                </form> 
-              </div>
-
-              <div class="col-md-12 table-responsive" style="margin-top:2%; ">
-                <table id="example3" class="table table-striped table-bordered" style="width:100%">
-                  <thead>
-                    <tr>
-                      <th>Lokasi</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php
-                    foreach ($lokasi as $l){
-                    ?>
-                    <tr>
-                    
-                    <td><?php echo $l['lokasi'];?></td>
-                    <td>
-                     <a href="<?= base_url(''); ?>lokasi/edit/<?= $l['id']; ?>">
-                      <i class="fa fa-edit"></i>
-                    </a> |
-                    <a href="<?= base_url(''); ?>lokasi/delete/<?= $l['id']; ?>" onclick="return confirm('Sure want delete this data?')">
-                      <i class="fa fa-trash-o"></i>
-                    </a>
-                    </td>
-
-                    </tr>
-                    <?php } ?>
-                  </tbody>
-                </table>
-              </div>
-                
-            </div>
+                          <?= $this->session->flashdata('message'); ?>
+                            <form action="<?php echo site_url('stockout/createlokasi'); ?>" method="post">
+                                <label>Lokasi</label>
+                                <input type="text" name="nama_lokasi" id="nama_lokasi" placeholder="Masukan Lokasi" required="required" class="form-control" onkeyup="this.value = this.value.toUpperCase();">
+                                <?= form_error('nama_lokasi', '<small class="text-danger pl-3">', '</small>') ?>
+                                <br />
+                                <button type="submit" name="btn" class="btn-sm btn btn-primary">Add</button>
+                            </form>
+                            <br />
+                            <table class="table table-bordered table-striped mb-none" id="datatable-default">
+                            <br />
+                            <thead>
+                                <tr>
+                                    <th>Nama Lokasi</th>
+                                    <th>action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $no = 1;
+                                foreach ($lokasi as $l) {
+                                    ?>
+                                    <tr>
+                                        <td><?= $l['nama_lokasi'] ?></td>
+                                        <td>
+                                            <a href="<?= base_url(''); ?>lokasi_stockout/edit/<?= $l['id']; ?>">
+                                                <i class="fa fa-edit"></i>
+                                            </a> |
+                                            <a href="<?= base_url(''); ?>lokasi_stockout/delete/<?= $l['id']; ?>" onclick="return confirm('Sure want delete this data?')">
+                                                <i class="fa fa-trash-o"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                        </div>
             <footer class="panel-footer">
               <div class="row">
                 <div class="col-md-12 text-right">
@@ -650,6 +688,118 @@
         </div>
       </div>
       <!-- modal lokasi -->
+
+      <!-- modal pengeluar -->
+      <div id="pengeluar" class="zoom-anim-dialog modal-block modal-block-primary mfp-hide">
+          <section class="panel">
+            <header class="panel-heading">
+              <h2 class="panel-title">Pengeluar</h2>
+            </header>
+            <div class="panel-body">
+                          <?= $this->session->flashdata('message'); ?>
+                            <form action="<?php echo site_url('stockout/createpengeluar'); ?>" method="post">
+                                <label>Dikeluarkan oleh</label>
+                                <input type="text" name="nama_pengeluar" id="nama_pengeluar" placeholder="Masukan nama Pengeluar" required="required" class="form-control" onkeyup="this.value = this.value.toUpperCase();">
+                                <?= form_error('nama_pengeluar', '<small class="text-danger pl-3">', '</small>') ?>
+                                <br />
+                                <button type="submit" name="btn" class="btn-sm btn btn-primary">Add</button>
+                            </form>
+                            <br />
+                            <table class="table table-bordered table-striped mb-none" id="datatable-default2">
+                            <br />
+                            <thead>
+                                <tr>
+                                    <th>Nama Pengeluar</th>
+                                    <th>action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $no = 1;
+                                foreach ($pengeluar as $lu) {
+                                    ?>
+                                    <tr>
+                                        <td><?= $lu['nama_pengeluar'] ?></td>
+                                        <td>
+                                            <a href="<?= base_url(''); ?>pengeluar/edit/<?= $lu['id']; ?>">
+                                                <i class="fa fa-edit"></i>
+                                            </a> |
+                                            <a href="<?= base_url(''); ?>pengeluar/delete/<?= $lu['id']; ?>" onclick="return confirm('Sure want delete this data?')">
+                                                <i class="fa fa-trash-o"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                        </div>
+            <footer class="panel-footer">
+              <div class="row">
+                <div class="col-md-12 text-right">
+                  <button class="btn btn-default modal-dismiss">Cancel</button>
+                </div>
+              </div>
+            </footer>
+          </section>
+        </div>
+      </div>
+      <!-- modal pengeluar -->
+
+      <!-- modal supir -->
+      <div id="supir" class="zoom-anim-dialog modal-block modal-block-primary mfp-hide">
+          <section class="panel">
+            <header class="panel-heading">
+              <h2 class="panel-title">Supir</h2>
+            </header>
+            <div class="panel-body">
+                          <?= $this->session->flashdata('message'); ?>
+                            <form action="<?php echo site_url('stockout/createsupir'); ?>" method="post">
+                                <label>Supir</label>
+                                <input type="text" name="nama_supir" id="nama_supir" placeholder="Masukan nama supir" required="required" class="form-control" onkeyup="this.value = this.value.toUpperCase();">
+                                <?= form_error('nama_supir', '<small class="text-danger pl-3">', '</small>') ?>
+                                <br />
+                                <button type="submit" name="btn" class="btn-sm btn btn-primary">Add</button>
+                            </form>
+                            <br />
+                            <table class="table table-bordered table-striped mb-none" id="datatable-default3">
+                            <br />
+                            <thead>
+                                <tr>
+                                    <th>Nama Supir</th>
+                                    <th>action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $no = 1;
+                                foreach ($supir as $lu) {
+                                    ?>
+                                    <tr>
+                                        <td><?= $lu['nama_supir'] ?></td>
+                                        <td>
+                                            <a href="<?= base_url(''); ?>supir/edit/<?= $lu['id']; ?>">
+                                                <i class="fa fa-edit"></i>
+                                            </a> |
+                                            <a href="<?= base_url(''); ?>supir/delete/<?= $lu['id']; ?>" onclick="return confirm('Sure want delete this data?')">
+                                                <i class="fa fa-trash-o"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                        </div>
+            <footer class="panel-footer">
+              <div class="row">
+                <div class="col-md-12 text-right">
+                  <button class="btn btn-default modal-dismiss">Cancel</button>
+                </div>
+              </div>
+            </footer>
+          </section>
+        </div>
+      </div>
+      <!-- modal supir -->
 
       <!-- Vendor -->
       <script src="<?php echo base_url();?>/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js">
@@ -738,8 +888,6 @@
       </script>
       <script src="<?php echo base_url();?>/assets/javascripts/forms/examples.advanced.form.js" />
       </script>
-    <script src="<?php echo base_url();?>/assets/javascripts/tables/examples.datatables.default.js">
-    </script>
     <script src="<?php echo base_url();?>/assets/javascripts/tables/examples.datatables.row.with.details.js">
     </script>
     <script src="<?php echo base_url();?>/assets/javascripts/tables/examples.datatables.tabletools.js">
@@ -754,35 +902,45 @@
     </script>
     <!-- uppper -->
 
+<script type="text/javascript">
+  $(document).ready(function() {
+  'use strict';
+  var datatableInit = function() {
+    $('#datatable-default').dataTable();
+  };
+  $(function() {
+    datatableInit();
+  });
 
-    <!-- datatables -->
-    <script type="text/javascript">
-      $(document).ready(function() 
-                        {
-        $('#example').DataTable( {
-          "scrollY":        "200px",
-          "scrollCollapse": true,
-          "paging":         false
-        }
-                               );
-      }
-                       );
-    </script>
-    <!-- datatables -->
-    <!-- datatables -->
-    <script type="text/javascript">
-      $(document).ready(function() 
-                        {
-        $('#example2').DataTable( {
-          "scrollY":        "200px",
-          "scrollCollapse": true,
-          "paging":         false
-        }
-                                );
-      }
-                       );
-    </script>
-    <!-- datatables -->
+}).apply( this, [ jQuery ]);
+</script>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+  'use strict';
+  var datatableInit = function() {
+    $('#datatable-default2').dataTable();
+  };
+  $(function() {
+    datatableInit();
+  });
+
+}).apply( this, [ jQuery ]);
+</script>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+  'use strict';
+  var datatableInit = function() {
+    $('#datatable-default3').dataTable();
+  };
+  $(function() {
+    datatableInit();
+  });
+
+}).apply( this, [ jQuery ]);
+</script>
+   
 
   </body>
 </html>

@@ -8,6 +8,7 @@ class Superadmin extends CI_Controller
     {
         parent::__construct();
         is_logged_in();
+        $this->load->model('Dashboard_model');
     }
 
     public function index()
@@ -15,6 +16,7 @@ class Superadmin extends CI_Controller
         $data['title'] = 'Dashboard';
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
+        $data['stock'] = $this->Dashboard_model->getAllstock();
         $this->load->view('templates/header', $data);
         $this->load->view('superadmin/index', $data);
         $this->load->view('templates/footer');

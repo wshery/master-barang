@@ -129,33 +129,29 @@
   <body data-spy="scroll" data-target="#myScrollspy" data-offset="20">
 
     <!-- start: header -->
-    <header class="header">
-      <div class="logo-container">
-        <a href="../" class="logo">
-          <img src="<?php echo base_url(); ?>assets/images/logo.png" height="35" alt="Porto Admin" />
-        </a>
-        <div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
-          <i class="fa fa-bars" aria-label="Toggle sidebar">
-          </i>
-        </div>
+  <header class="header">
+    <div class="logo-container">
+      <a href="../" class="logo">
+        <img src="<?= base_url('./image/Logo.png') ?>" height="35" alt="IT - Super Admin - ISJM" />
+      </a>
+      <div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
+        <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
       </div>
+    </div>
 
-      <!-- start: search & user box -->
-      <div class="header-right">
-        <span class="separator">
-        </span>
-        <div id="userbox" class="userbox">
-          <a href="#" data-toggle="dropdown">
-            <figure class="profile-picture">
-              <img src="<?= base_url('assets/images/') . $user['image']; ?>" class="img-circle" />
-            </figure>
-            <div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@okler.com">
-              <span class="name">
-                <?= $user['name'] ?>
-              </span>
-              <span class="role">administrator
-              </span>
-            </div>
+    <!-- start: search & user box -->
+    <div class="header-right" style="padding-right: 2%;">
+      <span class="separator"></span>
+
+      <div id="userbox" class="userbox" style="margin-right: -2%;">
+        <a href="#" data-toggle="dropdown">
+          <figure class="profile-picture">
+            <img src="<?= base_url('./image/') . $user['image']; ?>" class="img-circle" />
+          </figure>
+          <div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@okler.com">
+            <span class="name"><?= $user['name'] ?></span>
+            <span class="role"></span>
+          </div>
             <i class="fa custom-caret">
             </i>
           </a>
@@ -219,7 +215,7 @@
                                 </a>
                                 <ul class="nav nav-children">
                                     <li>
-                                        <a href="<?= site_url('stokin'); ?>">
+                                        <a href="<?= site_url('stockin'); ?>">
                                             Stock In
                                         </a>
                                     </li>
@@ -346,12 +342,15 @@
                                     <table class="table invoice-items">
                                         <thead>
                                             <tr class="h4 text-dark">
+                                                <th id="cell-qty"   class="text-left text-semibold">No</th>
+                                                <th id="cell-item"   class="text-left text-semibold">Kode Barang</th>
                                                 <th id="cell-item"   class="text-left text-semibold">Nama Barang</th>
                                                 <th id="cell-qty"   class="text-left text-semibold">Jumlah Barang</th>
+                                                <th id="cell-item"   class="text-left text-semibold">Tujan Proyek</th>
                                                 <!-- <th id="cell-desc"   class="text-center text-semibold">Lokasi Barang</th> -->
                                                 <th id="cell-desc"    class="text-center text-semibold">Keterangan</th>
-                                                <th id="cell-price"  class="text-left text-semibold">Harga Barang</th>
-                                                <th id="cell-price"  class="text-center text-semibold">Subtotal</th>
+                                                <!-- <th id="cell-price"  class="text-left text-semibold">Harga Barang</th>
+                                                <th id="cell-price"  class="text-center text-semibold">Subtotal</th> -->
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -361,18 +360,23 @@
                                               $hasil_rupiah = "Rp. " . number_format($angka,0,',','.');
                                               return $hasil_rupiah;
                                              }
-
+                                            $i=1;
                                             foreach ($suratjalan as $sj){ ?>
                                             
                                             
                                             <tr>
+                                                <td class="text-left"><?php echo $i;  ?></td>
+                                                <td class="text-left text-semibold text-dark"><?php echo $sj['kode_barang']; ?></td>
                                                 <td class="text-left text-semibold text-dark"><?php echo $sj['nama_barang']; ?></td>
-                                                <td class="text-left"><?php echo $sj['jumlah']  ?></td>
+                                                <td class="text-left"><?php echo $sj['jumlah'].' '.$sj['satuan'];  ?></td>
+                                                <td class="text-left"><?php echo $sj['lokasi'];  ?></td>
                                                 <td class="text-center"><?php echo $sj['keterangan']; ?></td>
-                                                <td class="text-left"><?php echo rupiah($sj['harga']); ?></td>
-                                                <td class="text-center"><?php echo rupiah($sj['subtotal']); ?></td>
+                                                <!-- <td class="text-left"><?php echo rupiah($sj['harga']); ?></td>
+                                                <td class="text-center"><?php echo rupiah($sj['subtotal']); ?></td> -->
                                             </tr>
-                                            <?php } ?>
+                                            <?php
+                                             $i++; 
+                                             } ?>
                                             
                                         </tbody>
                                     </table>
@@ -389,7 +393,7 @@
                                                             $hitung_ppn =$harga*$ppn;
                                                             $harga_sekarang = $harga - $hitung_ppn;
                                                             echo" harga asli = $harga<br/> harga sesudah ppn = $harga_sekarang ";?> -->
-                                                        <td colspan="2">PPN (10%)</td>
+                                                        <!-- <td colspan="2">PPN (10%)</td>
                                                         <td class="text-left">
                                                          <?php
                                                           foreach ($total as $tot){
@@ -400,8 +404,8 @@
                                                                 
                                                             
                                                             ?>
-                                                        </td>
-                                                    </tr>
+                                                        </td> -->
+                                                   <!--  </tr>
                                                     <tr class="h4">
                                                         <td colspan="2">Grand Total</td>
                                                         <td class="text-left">
@@ -411,7 +415,7 @@
                                                               }
                                                             ?>
                                                         </td>
-                                                    </tr>
+                                                    </tr> -->
                                                 </tbody>
                                             </table>
                                         </div>

@@ -151,24 +151,26 @@
 							<h2 class="panel-title"><b>FORM ITEM</b></h2>
 						</header>
 						<div class="panel-body">
-							<div class="row form-group">
-								<div class="col-md-6">
-									<label>Nama Barang
-										<font color="red">*</font></label>
-									<input type="" name="" disabled="" value="<?= $stockin['nama_barang']; ?>" class="form-control input-sm" />
-								</div>
-
-								<div class="col-md-5">
-									<label>Quantity out
-									</label>
-									<input type="" name="" disabled="" value="<?= $stockin['jumlah_masuk']; ?>" class="form-control input-sm" />
-								</div>
-							</div>
 							<form action="" method="post" enctype="multipart/form-data">
+								<!-- <div class="row form-group">
+									<div class="col-md-6">
+										<label>Nama Barang
+											<font color="red">*</font></label>
+										<input type="" name="" disabled="" value="<?= $stockin['nama_barang']; ?>" class="form-control input-sm" />
+									</div>
+	
+									<div class="col-md-5">
+										<label>Quantity out
+										</label>
+										<input type="" name="" disabled="" value="<?= $stockin['jumlah_masuk']; ?>" class="form-control input-sm" />
+									</div>
+								</div> -->
 								<div class="row form-group" style="margin-top:2%; ">
 									<div class="col-md-6">
+										<label>Nama Barang
+											<font color="red">*</font></label>
 										<input type="hidden" name="id" value="<?= $stockin['id']; ?>">
-										<select name="nama_barang" id="nama_barang" data-plugin-selectTwo class="form-control input-sm populate name_list">
+										<select name="nama_barang" id="nama_barang" value="<?= $stockin['nama_barang']; ?>" data-plugin-selectTwo class="form-control input-sm populate name_list">
 											<?php
 											foreach ($mbarang as $m) { ?>
 												<option value="<?= $m['nama_barang']; ?>">
@@ -178,15 +180,17 @@
 										</select>
 									</div>
 									<div class="col-md-5">
-										<input type="" name="quantity_out" id="quantity_out" placeholder="ex : 10" class="form-control input-sm" />
+										<label>Quantity out
+										</label>
+										<input type="" name="quantity_out" id="quantity_out" value="<?= $stockin['jumlah_masuk']; ?>" placeholder="ex : 10" class="form-control input-sm" />
 										<?= form_error('quantity_out', '<small class="text-danger pl-3">', '</small>') ?>
 									</div>
 								</div>
 								<div class="form-group mb-lg">
 									<label>Lokasi</label>
-									<input type="" name="" disabled="" value="<?= $stockin['lokasi']; ?>" class="form-control input-sm" />
-									<br>
-									<select name="lokasi" data-plugin-selectTwo class="form-control input-sm populate name_list">
+									<!-- <input type="" name="" disabled="" value="<?= $stockin['lokasi']; ?>" class="form-control input-sm" />
+									<br> -->
+									<select name="lokasi" value="<?= $stockin['lokasi']; ?>" data-plugin-selectTwo class="form-control input-sm populate name_list">
 										<?php
 										foreach ($lokasi as $l) { ?>
 											<option value="<?= $l['nama_lokasi']; ?>">

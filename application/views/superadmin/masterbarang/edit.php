@@ -156,7 +156,7 @@
                                 <div class="row form-group">
                                     <div class="col-sm-6">
                                         <label>Kode Barang</label>
-                                        <input type="text" name="kode_barang" id="kode_barang" placeholder="ex : PSU" value="<?= $mbarang['kode_barang']; ?>" maxlgth="8en" class="form-control" onkeyup="this.value = this.value.toUpperCase();">
+                                        <input type="text" name="kode_barang" id="kode_barang" placeholder="ex : PSU" value="<?= $mbarang['kode_barang']; ?>" class="form-control" onkeyup="this.value = this.value.toUpperCase();" readonly>
                                         <?= form_error('kode_barang', '<small class="text-danger pl-3">', '</small>') ?>
                                     </div>
 

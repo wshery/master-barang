@@ -1,21 +1,28 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Stockout extends CI_Controller{
+class Stockout extends CI_Controller
+{
     private $filename = "import_data_stockout";
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
         $this->load->model('Stockout_model');
         $this->load->model('Masterbarang_model');
         $this->load->model('Lokasi_model');
+        $this->load->model('Pengeluar_model');
+        $this->load->model('Supir_model');
+        $this->load->model('Stockin_model');
+
         $this->load->library('form_validation');
     }
 
-    public function index(){
-        
+    public function index()
+    {
+
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
-
+        $data['stkbrg'] = $this->Stockin_model->GetTotal();
         $data['stockout'] = $this->Stockout_model->getAllstockout();
         $data['title'] = 'IT IJSM';
         $this->load->view('templates/master_header', $data);
@@ -23,8 +30,9 @@ class Stockout extends CI_Controller{
         $this->load->view('templates/master_footer');
     }
 
-    public function form(){
-      $data = array(); // Buat variabel $data sebagai array
+    public function form()
+    {
+        $data = array(); // Buat variabel $data sebagai array
 
         if (isset($_POST['preview'])) { // Jika user menekan tombol Preview pada form
             // lakukan upload file dengan memanggil function upload yang ada di SiswaModel.php
@@ -35,7 +43,7 @@ class Stockout extends CI_Controller{
                 include APPPATH . 'third_party/PHPExcel/PHPExcel.php';
 
                 $excelreader = new PHPExcel_Reader_Excel2007();
-                $loadexcel = $excelreader->load('excel/'.$this->filename.'.xlsx'); // Load file yang tadi diupload ke folder excel
+                $loadexcel = $excelreader->load('excel/' . $this->filename . '.xlsx'); // Load file yang tadi diupload ke folder excel
                 $sheet = $loadexcel->getActiveSheet()->toArray(null, true, true, true);
 
                 // Masukan variabel $sheet ke dalam array data yang nantinya akan di kirim ke file form.php
@@ -77,15 +85,16 @@ class Stockout extends CI_Controller{
             if ($numrow > 1) {
                 // Kita push (add) array data ke variabel data
                 array_push($data, array(
-                    'nama_barang' => $row['A'], // Insert data nama dari kolom B di excel
-                    'jumlah' => $row['B'], // Insert data jenis kelamin dari kolom C di excel
-                    'lokasi' => $row['C'], // Insert data alamat dari kolom D di excel
-                    'keterangan' => $row['D'], // Insert data nis dari kolom E di excel
-                    'user_session' => $row['E'], // Insert data nis dari kolom F di excel
-                    'dateout' => $row['F'], // Insert data nis dari kolom G di excel
-                    'divisi' => $row['G'], // Insert data nis dari kolom H di excel
-                    'no_suratjalan' => $row['H'], // Insert data nis dari kolom I di excel
-                    'nolast_suratjalan' => $row['I'], // Insert data nis dari kolom J di excel
+                    'kode_barang' => $row['A'],
+                    'nama_barang' => $row['B'], // Insert data nama dari kolom B di excel
+                    'jumlah' => $row['C'], // Insert data jenis kelamin dari kolom C di excel
+                    'lokasi' => $row['D'], // Insert data alamat dari kolom D di excel
+                    'keterangan' => $row['E'], // Insert data nis dari kolom E di excel
+                    'user_session' => $row['F'], // Insert data nis dari kolom F di excel
+                    'dateout' => $row['G'], // Insert data nis dari kolom G di excel
+                    'divisi' => $row['H'], // Insert data nis dari kolom H di excel
+                    'no_suratjalan' => $row['I'], // Insert data nis dari kolom I di excel
+                    'nolast_suratjalan' => $row['J'], // Insert data nis dari kolom J di excel
                 ));
             }
 
@@ -93,25 +102,37 @@ class Stockout extends CI_Controller{
         }
 
         // Panggil fungsi insert_multiple yg telah kita buat sebelumnya di model
-        $this->Stockout_model->insert_multiple($data);
+        if ($data == null) {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="success">Mohon lengkapi data terlebih dahulu!</div>');
+            redirect("stockout/form");
+        } else {
+            $this->Stockout_model->insert_multiple($data);
 
-        redirect("stockout/index"); // Redirect ke halaman awal (ke controller siswa fungsi index)
+            redirect("stockout/index"); //Redirect ke halaman awal
+        }
     }
 
-    public function create(){
+    public function create()
+    {
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
 
         $data['stockout'] = $this->Stockout_model->getAllStockout();
+        $data['stockin'] = $this->Stockout_model->getNamaBarang();
         $data['mbarang'] = $this->Masterbarang_model->getAllMasterbarang();
         $data['lokasi'] = $this->Lokasi_model->getAllLokasi();
+        $data['pengeluar'] = $this->Pengeluar_model->getAllPengeluar();
+        $data['supir'] = $this->Supir_model->getAllSupir();
+
         $data['title'] = 'IT IJSM';
         $this->load->view('superadmin/stockout/create', $data);
     }
 
-    public function buat(){
+    public function buat()
+    {
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
+
         $this->Stockout_model->CreateStockout();
         $this->session->set_flashdata('message', '<div class="alert alert-success">
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -120,7 +141,8 @@ class Stockout extends CI_Controller{
         redirect('stockout/index');
     }
 
-    public function createlokasi(){
+    public function createlokasi()
+    {
         $this->form_validation->set_rules('nama_lokasi', 'Lokasi', 'trim|required');
         if ($this->form_validation->run() == false) {
             $this->session->set_flashdata('message', '<div class="alert alert-success">
@@ -151,19 +173,85 @@ class Stockout extends CI_Controller{
         $this->load->view('templates/master_footer');
     }
 
-    public function ngeprint(){
+    public function createpengeluar()
+    {
+        $this->form_validation->set_rules('nama_pengeluar', 'Pengeluar', 'trim|required');
+        if ($this->form_validation->run() == false) {
+            $this->session->set_flashdata('message', '<div class="alert alert-success">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                        <strong>Notifikasi</strong> Gagal menambah data.
+                                    </div>');
+            $data['title'] = 'IT IJSM';
+            $this->load->view('superadmin/stockout/create');
+        } else {
+            $this->Pengeluar_model->CreatePengeluar();
+            $this->session->set_flashdata('message', '<div class="alert alert-success">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                        <strong>Notifikasi</strong> Sukses menambah data.
+                                    </div>');
+            redirect('stockout/modalpengeluar');
+        }
+    }
+
+    public function modalpengeluar()
+    {
+        $data['title'] = 'IT IJSM';
+        $data['user'] = $this->db->get_where('user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+        $data['pengeluar'] = $this->Pengeluar_model->getAllPengeluar();
+
+        $this->load->view('templates/master_header', $data);
+        $this->load->view('superadmin/stockout/create_pengeluar', $data);
+        $this->load->view('templates/master_footer');
+    }
+
+    public function createsupir()
+    {
+        $this->form_validation->set_rules('nama_supir', 'Supir', 'trim|required');
+        if ($this->form_validation->run() == false) {
+            $this->session->set_flashdata('message', '<div class="alert alert-success">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                        <strong>Notifikasi</strong> Gagal menambah data.
+                                    </div>');
+            $data['title'] = 'IT IJSM';
+            $this->load->view('superadmin/stockout/create');
+        } else {
+            $this->Supir_model->CreateSupir();
+            $this->session->set_flashdata('message', '<div class="alert alert-success">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                        <strong>Notifikasi</strong> Sukses menambah data.
+                                    </div>');
+            redirect('stockout/modalsupir');
+        }
+    }
+
+    public function modalsupir()
+    {
+        $data['title'] = 'IT IJSM';
+        $data['user'] = $this->db->get_where('user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+        $data['supir'] = $this->Supir_model->getAllSupir();
+
+        $this->load->view('templates/master_header', $data);
+        $this->load->view('superadmin/stockout/create_supir', $data);
+        $this->load->view('templates/master_footer');
+    }
+
+    public function ngeprint()
+    {
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
         $data['stockout'] = $this->Stockout_model->getAllstockout();
         $data['mbarang'] = $this->Masterbarang_model->getAllMasterbarang();
         $data['suratjalan'] = $this->Stockout_model->suratjalan();
         $data['no_surat'] = $this->Stockout_model->no_surat();
-        $data['total'] = $this->Stockout_model->total();
+
         $data['title'] = 'IT IJSM';
         $this->load->view('superadmin/stockout/print', $data);
     }
 
-    public function print_suratjalan(){
+    public function print_suratjalan()
+    {
         $data['title'] = 'IT IJSM';
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
@@ -171,7 +259,7 @@ class Stockout extends CI_Controller{
         $data['mbarang'] = $this->Masterbarang_model->getAllMasterbarang();
         $data['suratjalan'] = $this->Stockout_model->suratjalan();
         $data['no_surat'] = $this->Stockout_model->no_surat();
-        $data['total'] = $this->Stockout_model->total();
+
         $data['title'] = 'IT IJSM';
         $this->load->view('superadmin/stockout/print_suratjalan', $data);
     }

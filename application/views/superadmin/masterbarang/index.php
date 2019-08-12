@@ -157,11 +157,11 @@
 
                                     <div class="col-md-4">
                                         <form action="<?php echo base_url("masterbarang/import"); ?>" method="post" enctype="multipart/form-data">
-                                            <a style="margin-left: 20%;" href="<?php echo base_url("excel/Master Barang.xlsx"); ?>" class="mb-xs mt-xs mr-xs btn btn-sm btn-default">
+                                            <a style="margin-left: 0%; padding-right: 16%" href="<?php echo base_url("excel/Master_Barang.xlsx"); ?>" class="mb-xs mt-xs mr-xs btn btn-sm btn-default">
                                                 <i class="fa fa-print"></i>&nbsp;
                                                 Export
                                             </a>
-                                            <a style="margin-right: 10%; padding-right: 11%;" href="<?php echo base_url("masterbarang/form"); ?>" class="mb-xs mt-xs mr-xs btn btn-sm btn-success"><i class="fa fa-file-text"></i>&nbsp; Import Data Excel</a><br><br>
+                                            <a style="margin-left: 0%; padding-right: 14%;" href="<?php echo base_url("masterbarang/form"); ?>" class="mb-xs mt-xs mr-xs btn btn-sm btn-success"><i class="fa fa-file-text"></i>&nbsp; Import Data Excel</a><br><br>
                                         </form>
                                     </div>
                                 </div>

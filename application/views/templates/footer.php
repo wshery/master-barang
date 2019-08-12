@@ -147,6 +147,17 @@
     });
 </script>
 
+<script>
+    $(document).ready(function() {
+        $("#myBtn1").click(function() {
+            $("#myModal1").modal("show");
+        });
+        $("#myModal1").on('hidden.bs.modal', function() {
+            alert('The modal is now hidden.');
+        });
+    });
+</script>
+
 </body>
 
 </html>

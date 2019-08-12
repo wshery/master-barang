@@ -76,6 +76,7 @@
                     <h2 class="panel-title"><b>FORM IMPORT EXCEL</b></h2>
                 </header>
                 <div class="panel-body">
+                    <?= $this->session->flashdata('message'); ?>
                     <div class="alert alert-info">
                         <strong>
                             Perhatian! sebelum melakukan <i>"import"</i> harap baca prosedur di bawah ini :
@@ -98,7 +99,7 @@
                         <div class="panel-body">
                             Template Excel : <a style="margin-left: 1%;" href="<?php echo base_url("excel/Stock_Out.xlsx"); ?>" class="mb-xs mt-xs mr-xs btn btn-sm btn-default">
                                 <i class="fa fa-print"></i>&nbsp;
-                                Print
+                                Export
                             </a><b>.xlsx</b>
                             <!-- Buat sebuah tag form dan arahkan action nya ke controller ini lagi -->
                             <form method="post" action="<?php echo base_url("stockout/form"); ?>" enctype="multipart/form-data">
@@ -122,27 +123,27 @@
                                     echo "<div style='color: red;'>" . $upload_error . "</div>"; // Muncul pesan error upload
                                     die; // stop skrip
                                 }
-                                
+
                                 error_reporting(0);
-                            echo "<br />";
-                            // Buat sebuah tag form untuk proses import data ke database
-                            echo "<form method='post' action='" . base_url("stockout/import") . "'>";
-                            // Buat sebuah div untuk alert validasi kosong
-                            echo "<div style='color: red;' id='kosong'>
+                                echo "<br />";
+                                // Buat sebuah tag form untuk proses import data ke database
+                                echo "<form method='post' action='" . base_url("stockout/import") . "'>";
+                                // Buat sebuah div untuk alert validasi kosong
+                                echo "<div style='color: red;' id='kosong'>
                                 Semua data belum diisi, Ada <span id='jumlah_kosong'></span> data yang belum diisi.
                                 </div>";
-                            echo "*Note : ";
-                            echo "<p>";
-                            echo "- Field <b style='color: #C0C0C0;'>Abu Abu / Putih</b> data sudah di isi";
-                            echo "<br/>";
-                            echo "- Field <b style='color: red;'>Merah</b> data belum di isi";
-                            echo "<p>";
-                            echo "<button type='submit' name='import' class='mb-xs mt-xs mr-xs btn btn-sm btn-primary'>Import</button>";
-                            echo "<table border='1' cellpadding='8'  class='table table-bordered table-striped mb-none' id='datatable-default'>
+                                echo "*Note : ";
+                                echo "<p>";
+                                echo "- Field <b style='color: #C0C0C0;'>Abu Abu / Putih</b> data sudah di isi";
+                                echo "<br/>";
+                                echo "- Field <b style='color: red;'>Merah</b> data belum di isi";
+                                echo "<p>";
+                                echo "<button type='submit' name='import' class='mb-xs mt-xs mr-xs btn btn-sm btn-primary'>Import</button>";
+                                echo "<table border='1' cellpadding='8'  class='table table-bordered table-striped mb-none' id='datatable-default'>
                                 <tr>
                                     <th colspan='10' align='center'>Preview Data</th>
                                 </tr>
-                                <tr>
+                                <tr><th>Kode Barang</th>
                                     <th>Nama Barang</th>
                                     <th>Jumlah</th>
                                     <th>Lokasi</th>
@@ -161,16 +162,17 @@
                                 // $sheet adalah variabel yang dikirim dari controller
                                 foreach ($sheet as $row) {
                                     // Ambil data pada excel sesuai Kolom
-                                    $nama_barang = $row['A']; // Insert data nama dari kolom B di excel
-                                    $jumlah = $row['B']; // Insert data jenis kelamin dari kolom C di excel
-                                    $lokasi = $row['C']; // Insert data alamat dari kolom D di excel
-                                    $keterangan = $row['D']; // Insert data nis dari kolom A di excel
-                                    $user_session = $row['E']; // Insert data nis dari kolom A di excel
-                                    $dateout = $row['F']; // Insert data nis dari kolom A di excel
-                                    $divisi = $row['G']; // Insert data nis dari kolom A di excel
-                                    $no_suratjalan = $row['H']; // Insert data nis dari kolom A di excel
-                                    $nolast_suratjalan = $row['I']; // Insert data nis dari kolom A di excel
-                                    if (empty($nama_barang) && empty($jumlah) && empty($lokasi) && empty($keterangan) && empty($user_session) && empty($dateout) && empty($divisi) && empty($no_suratjalan) && empty($nolast_suratjalan))
+                                    $kode_barang = $row['A']; // Insert data nama dari kolom B di excel
+                                    $nama_barang = $row['B']; // Insert data nama dari kolom B di excel
+                                    $jumlah = $row['C']; // Insert data jenis kelamin dari kolom C di excel
+                                    $lokasi = $row['D']; // Insert data alamat dari kolom D di excel
+                                    $keterangan = $row['E']; // Insert data nis dari kolom A di excel
+                                    $user_session = $row['F']; // Insert data nis dari kolom A di excel
+                                    $dateout = $row['G']; // Insert data nis dari kolom A di excel
+                                    $divisi = $row['H']; // Insert data nis dari kolom A di excel
+                                    $no_suratjalan = $row['I']; // Insert data nis dari kolom A di excel
+                                    $nolast_suratjalan = $row['J']; // Insert data nis dari kolom A di excel
+                                    if (empty($kode_barang) && empty($nama_barang) && empty($jumlah) && empty($lokasi) && empty($keterangan) && empty($user_session) && empty($dateout) && empty($divisi) && empty($no_suratjalan) && empty($nolast_suratjalan))
                                         continue; // Lewat data pada baris ini (masuk ke looping selanjutnya / baris selanjutnya)
 
                                     // Cek $numrow apakah lebih dari 1
@@ -178,6 +180,7 @@
                                     // Jadi dilewat saja, tidak usah diimport
                                     if ($numrow > 1) {
                                         // Validasi apakah semua data telah diisi
+                                        $kode_barang_td = (!empty($kode_barang)) ? "" : " style='background: #E07171;'"; // Jika Nama Barang kosong, beri warna merah
                                         $nama_barang_td = (!empty($nama_barang)) ? "" : " style='background: #E07171;'"; // Jika Nama Barang kosong, beri warna merah
                                         $jumlah_td = (!empty($jumlah)) ? "" : " style='background: #E07171;'"; // Insert data Nama Kategori dari kolom C di excel
                                         $lokasi_td = (!empty($lokasi)) ? "" : " style='background: #E07171;'"; // Jika Kondisi Barang kosong, beri warna merah
@@ -189,11 +192,12 @@
                                         $nolast_suratjalan_td = (!empty($nolast_suratjalan)) ? "" : " style='background: #E07171;'"; // Jika Keterangan Barang kosong, beri warna merah
 
                                         // Jika salah satu data ada yang kosong
-                                        if (empty($nama_barang) && empty($jumlah) && empty($lokasi) && empty($keterangan) && empty($user_session) && empty($dateout) && empty($divisi) && empty($no_suratjalan) && empty($nolast_suratjalan)) {
+                                        if (empty($kode_barang) && empty($nama_barang) && empty($jumlah) && empty($lokasi) && empty($keterangan) && empty($user_session) && empty($dateout) && empty($divisi) && empty($no_suratjalan) && empty($nolast_suratjalan)) {
                                             $kosong++; // Tambah 1 variabel $kosong
                                         }
 
                                         echo "<tr>";
+                                        echo "<td" . $kode_barang_td . ">" . $kode_barang . "</td>";
                                         echo "<td" . $nama_barang_td . ">" . $nama_barang . "</td>";
                                         echo "<td" . $jumlah_td . ">" . $jumlah . "</td>";
                                         echo "<td" . $lokasi_td . ">" . $lokasi . "</td>";
@@ -224,7 +228,7 @@
                                         });
                                     </script>
                                 <?php
-                                } 
+                                }
 
                                 echo "</form>";
                             }

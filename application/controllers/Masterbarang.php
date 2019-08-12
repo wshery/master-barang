@@ -44,8 +44,7 @@ class Masterbarang extends CI_Controller
 
     public function form()
     {
-        $aku = $this->session->userdata('name');
-        $aku['title'] = "Form Import | Export";
+        // $aku['title'] = "Form Import | Export";
         $data = array(); // Buat variabel $data sebagai array
 
         if (isset($_POST['preview'])) { // Jika user menekan tombol Preview pada form
@@ -71,9 +70,9 @@ class Masterbarang extends CI_Controller
         // $data['user'] = $this->db->get_where('user', ['email' =>
         // $this->session->userdata('email')])->row_array();
 
-        $this->load->view('templates/header', $aku);
-        $this->load->view('superadmin/masterbarang/form', $data, $aku);
-        $this->load->view('templates/footer');
+        // $this->load->view('templates/header');
+        $this->load->view('superadmin/masterbarang/form', $data);
+        // $this->load->view('templates/footer');
     }
 
     public function import()
@@ -96,16 +95,18 @@ class Masterbarang extends CI_Controller
             if ($numrow > 1) {
                 // Kita push (add) array data ke variabel data
                 array_push($data, array(
-                    'kode_barang' => $row['A'], // Insert data nis dari baris A di excel
-                    'nama_barang' => $row['B'], // Insert data nama dari baris B di excel
-                    'nama_kategori' => $row['C'], // Insert data jenis kelamin dari baris C di excel
-                    'kondisi_barang' => $row['D'], // Insert data alamat dari baris D di excel
-                    'nomor_serial' => $row['E'], // Insert data nis dari baris A di excel
-                    'nomor_produk' => $row['F'], // Insert data nis dari baris A di excel
-                    'keterangan_barang' => $row['G'], // Insert data nis dari baris A di excel
-                    'batas' => $row['H'], // Insert data nis dari baris A di excel
-                    'nama_satuan' => $row['I'], // Insert data nis dari baris A di excel
-                    'photo' => $row['J'], // Insert data nis dari baris A di excel
+                    'kode_barang' => $row['A'],
+                    'kode_akurat' => $row['B'],
+                    'nama_barang' => $row['C'],
+                    'nama_kategori' => $row['D'],
+                    'kondisi_barang' => $row['E'],
+                    'nomor_serial' => $row['F'],
+                    'nomor_produk' => $row['G'],
+                    'keterangan_barang' => $row['H'],
+                    'harga' => $row['I'],
+                    'batas' => $row['J'],
+                    'nama_satuan' => $row['K'],
+                    'photo' => $row['L'],
                 ));
             }
 
@@ -113,9 +114,15 @@ class Masterbarang extends CI_Controller
         }
 
         // Panggil fungsi insert_multiple yg telah kita buat sebelumnya di model
-        $this->Masterbarang_model->insert_multiple($data);
 
-        redirect("masterbarang/index"); // Redirect ke halaman awal (ke controller siswa fungsi index)
+        if ($data == null) {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="success">Mohon lengkapi data terlebih dahulu!</div>');
+            redirect("masterbarang/form");
+        } else {
+            $this->Masterbarang_model->insert_multiple($data);
+
+            redirect("masterbarang/index"); //Redirect ke halaman awal
+        }
     }
 
     public function create()
@@ -123,6 +130,7 @@ class Masterbarang extends CI_Controller
         $data['title'] = "Master Barang";
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
+        // $data['kodeunik'] = $this->Masterbarang_model->Create();
         $data['satuan'] = $this->Satuan_model->getAllSatuan();
         $data['kategori'] = $this->Kategori_model->getAllKategori();
 
@@ -136,6 +144,42 @@ class Masterbarang extends CI_Controller
         $this->Masterbarang_model->CreateMasterbarang();
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="success">Success Insert New Barang!</div>');
         redirect('masterbarang/index');
+    }
+
+    public function createkategori()
+    {
+        $this->form_validation->set_rules('nama_kategori', 'Kategori', 'trim|required');
+        if ($this->form_validation->run() == false) {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="failed">Failed Insert New Kategori!</div>');
+            $this->load->view('templates/header');
+            $this->load->view('templates/sidebar');
+            $this->load->view('superadmin/masterbarang/create');
+            $this->load->view('templates/footer');
+        } else {
+            $this->Kategori_model->CreateKategori();
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="success">Success Insert New Kategori!</div>');
+            redirect('masterbarang/modalkategori');
+        }
+    }
+
+    public function modalkategori()
+    {
+        $data['title'] = "Master Barang";
+        $data['user'] = $this->db->get_where('user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+        $data['satuan'] = $this->Satuan_model->getAllSatuan();
+        $data['kategori'] = $this->Kategori_model->getAllKategori();
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('superadmin/masterbarang/create_modal_kategori', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function modalstorekategori()
+    {
+        $this->Satuan_model->ModalSatuan();
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="success">Success Insert New Barang!</div>');
+        redirect('masterbarang/createsatuan');
     }
 
     public function createsatuan()
@@ -156,12 +200,13 @@ class Masterbarang extends CI_Controller
 
     public function modalsatuan()
     {
+        $data['title'] = "Master Barang";
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
         $data['satuan'] = $this->Satuan_model->getAllSatuan();
         $data['kategori'] = $this->Kategori_model->getAllKategori();
 
-        $this->load->view('templates/header');
+        $this->load->view('templates/header', $data);
         $this->load->view('superadmin/masterbarang/create_modal', $data);
         $this->load->view('templates/footer');
     }
@@ -189,7 +234,7 @@ class Masterbarang extends CI_Controller
         $this->form_validation->set_rules('batas', 'Batas Peringatan', 'trim|required|numeric');
 
         if ($this->form_validation->run() == false) {
-            $this->load->view('templates/header');
+            $this->load->view('templates/header', $data);
             $this->load->view('superadmin/masterbarang/edit', $data);
             $this->load->view('templates/footer');
         } else {

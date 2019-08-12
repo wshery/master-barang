@@ -41,4 +41,9 @@ class Kategori_model extends CI_Model
     {
         $this->db->delete('kategori', ['id' => $id]);
     }
+
+    public function HapusModal($id)
+    {
+        $this->db->delete('kategori', ['id' => $id]);
+    }
 }

@@ -141,7 +141,7 @@
     			                        <div class="form-group mb-lg">
     			                            <label>Lokasi</label>
 
-    			                            <button class="mb-xs mt-xs mr-xs modal-with-zoom-anim btn btn-default btn btn-danger btn-xs" href="#Modallokasi" id="addToTable">
+    			                            <button class="mb-xs mt-xs mr-xs modal-with-zoom-anim btn btn-default btn btn-danger btn-xs" data-target="#Modallokasi" id="addToTable">
     			                                <i class="fa fa-map-marker"></i>&nbsp; Tambah Lokasi
     			                            </button>
     			                            <!-- <input type="" name="lokasi" id="n11" onkeyup="n1()" value="<?php if (empty($lokasi)) {
@@ -162,8 +162,8 @@
 
 
 
-    			                        <div class="form-group mb-lg ">
-    			                            <label>Keterangan Barang <b>(optional)</b> </label>
+    			                        <div class="form-group mb-lg">
+    			                            <label>Keterangan Barang</label>
     			                            <textarea name="keterangan" value="<?php
                                                                                 if (empty($keterangan)) {
                                                                                     echo "";
@@ -178,7 +178,7 @@
     			                            <div class="fileupload fileupload-new" data-provides="fileupload">
     			                                <div class="input-append">
     			                                    <div class="uneditable-input">
-    			                                        <!-- <i class="fa fa-file fileupload-exists"></i> -->
+
     			                                        <span class="fileupload-preview"></span>
     			                                    </div>
     			                                    <span class="btn btn-default btn-file">
@@ -195,7 +195,7 @@
     			                        <input type="submit" name="submit" id="submit" class="btn btn-info" value="Submit" />
     			                    </form>
     			                    <!-- modal lokasi -->
-    			                    <div class="modal fade" id="myModal2" role="dialog">
+    			                    <div class="modal fade" id="Modallokasi" role="dialog">
     			                        <div class="modal-dialog">
 
     			                            <!-- Moda content -->

@@ -183,37 +183,41 @@
                                     <table class="table invoice-items">
                                         <thead>
                                             <tr class="h4 text-dark">
+                                                <th id="cell-qty"   class="text-left text-semibold">No</th>
+                                                <th id="cell-item"   class="text-left text-semibold">Kode Barang</th>
                                                 <th id="cell-item"   class="text-left text-semibold">Nama Barang</th>
                                                 <th id="cell-qty"   class="text-left text-semibold">Jumlah Barang</th>
+                                                <th id="cell-item"   class="text-left text-semibold">Tujan Proyek</th>
                                                 <!-- <th id="cell-desc"   class="text-center text-semibold">Lokasi Barang</th> -->
                                                 <th id="cell-desc"    class="text-center text-semibold">Keterangan</th>
-                                                <th id="cell-price"  class="text-left text-semibold">Harga Barang</th>
-                                                <th id="cell-price"  class="text-center text-semibold">Subtotal</th>
+                                                <!-- <th id="cell-price"  class="text-left text-semibold">Harga Barang</th>
+                                                <th id="cell-price"  class="text-center text-semibold">Subtotal</th> -->
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php  
 
-                                            function rupiah($angka)
-                                            {
-
-                                                $hasil_rupiah = "Rp. " . number_format($angka,0,',','.');
-                                                return $hasil_rupiah;
-                                             
-                                            }
-
+                                            function rupiah($angka){
+                                              $hasil_rupiah = "Rp. " . number_format($angka,0,',','.');
+                                              return $hasil_rupiah;
+                                             }
+                                            $i=1;
                                             foreach ($suratjalan as $sj){ ?>
                                             
                                             
                                             <tr>
+                                                <td class="text-left"><?php echo $i;  ?></td>
+                                                <td class="text-left text-semibold text-dark"><?php echo $sj['kode_barang']; ?></td>
                                                 <td class="text-left text-semibold text-dark"><?php echo $sj['nama_barang']; ?></td>
-                                                <td class="text-left"><?php echo $sj['jumlah']; ?></td>
+                                                <td class="text-left"><?php echo $sj['jumlah'].' '.$sj['satuan'];  ?></td>
+                                                <td class="text-left"><?php echo $sj['lokasi'];  ?></td>
                                                 <td class="text-center"><?php echo $sj['keterangan']; ?></td>
-                                                <td class="text-left"><?php echo rupiah($sj['harga']); ?></td>
-                                                <td class="text-center"><?php echo rupiah($sj['subtotal']); ?></td>
+                                                <!-- <td class="text-left"><?php echo rupiah($sj['harga']); ?></td>
+                                                <td class="text-center"><?php echo rupiah($sj['subtotal']); ?></td> -->
                                             </tr>
-                                            <?php } ?>
-                                            
+                                            <?php
+                                             $i++; 
+                                             } ?>
                                             
                                         </tbody>
                                     </table>
@@ -230,7 +234,7 @@
                                                             $hitung_ppn =$harga*$ppn;
                                                             $harga_sekarang = $harga - $hitung_ppn;
                                                             echo" harga asli = $harga<br/> harga sesudah ppn = $harga_sekarang ";?> -->
-                                                        <td colspan="2">PPN (10%)</td>
+                                                        <!-- <td colspan="2">PPN (10%)</td>
                                                         <td class="text-left">
                                                           <?php
                                                           foreach ($total as $tot){
@@ -251,7 +255,7 @@
                                                                 echo rupiah($grand_total);
                                                               }
                                                             ?>
-                                                        </td>
+                                                        </td> -->
                                                     </tr>
                                                 </tbody>
                                             </table>

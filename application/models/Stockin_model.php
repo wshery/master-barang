@@ -12,8 +12,18 @@ class Stockin_model extends CI_Model
     }
     public function GetTotal()
     {
-        $stkbrg = $this->db->query("SELECT stockin.`nama_barang` AS nama_barangs, SUM(stockin.jumlah_masuk) AS total FROM stockin GROUP BY stockin.`nama_barang`");
-        return $stkbrg->result();
+        // $stkbrg = $this->db->query("SELECT stockin.`nama_barang` AS nama_barangs, SUM(stockin.jumlah_masuk) AS total FROM stockin GROUP BY stockin.`nama_barang`");
+        // return $stkbrg->result();
+
+        $query = $this->db->query("SELECT stockin.`nama_barang` AS nama_barangs, SUM(stockin.jumlah_masuk) AS total FROM stockin GROUP BY stockin.`nama_barang`");
+
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $data) {
+                $stkbrg[] = $data;
+            }
+
+            return $stkbrg;
+        }
     }
 
     // Fungsi untuk melakukan proses upload file
@@ -49,35 +59,52 @@ class Stockin_model extends CI_Model
             $config['allowed_types'] = 'jpg|gif|png';
             $this->load->library('upload', $config);
             $lampiran = $this->upload->data('file_name');
-            if (!$this->upload->do_upload('lampiran')) {
-                echo "download gagal";
-                die();
-            } else {
-                $lampiran = $this->upload->data('file_name');
-            }
+            // if (!$this->upload->do_upload('lampiran')) {
+            //     echo "download gagal";
+            //     die();
+            // } else {
+            //     $lampiran = $this->upload->data('file_name');
+            // }
             for ($count = 0; $count < count($_POST['nama_barang']); $count++) {
                 //post
                 $nama_barang = $_POST['nama_barang'][$count];
                 $jumlah_masuk = $_POST['quantity_out'][$count];
+                $kode_barang = $this->input->post('kode_barang');
                 $lokasi = $this->input->post('lokasi');
                 $keterangan = $this->input->post('keterangan');
                 $lampiran = $_FILES['lampiran']['name'];
                 $tgl = date('d/m/Y');
                 $user_ses = $this->session->userdata('role');
 
-                // $q_unit = $this->db->query("SELECT satuan FROM mbarang WHERE nama_barang='$nama_barang' ")->result();
-                // foreach ($q_unit as $key) { }
+                $kd_barang = $this->db->query("SELECT * FROM mbarang WHERE nama_barang='$nama_barang'")->result();
+                foreach ($kd_barang as $kbarang) { }
+                $kode_barang = $kbarang->kode_barang;
+
+                $q_unit = $this->db->query("SELECT nama_satuan FROM mbarang WHERE nama_barang='$nama_barang' ")->result();
+                foreach ($q_unit as $key) { }
+
+                $qharga = $this->db->query("SELECT 
+               '$nama_barang' AS sbarang,
+                mbarang.`harga`AS harga
+                FROM mbarang
+                WHERE mbarang.`nama_barang`='$nama_barang'")->result();
+
+                foreach ($qharga as $qh) { }
+                $harga = $qh->harga;
+
                 $data = array(
-                    //'unit' => $key->satuan,
+                    'unit' => $key->nama_satuan,
                     'nama_barang' => $nama_barang,
+                    'kode_barang' => $kode_barang,
                     'jumlah_masuk' => $jumlah_masuk,
+                    'harga' => $harga,
                     'lokasi' => $lokasi,
                     'keterangan' => $keterangan,
                     'lampiran' => $lampiran,
                     'tanggal_masuk' => $tgl,
                     'user_session' => $user_ses
                 );
-
+                // print_r($data);
                 $this->db->insert('stockin', $data);
             }
             redirect('stockin/index');
@@ -108,11 +135,11 @@ class Stockin_model extends CI_Model
             $this->load->library('upload', $config);
             $lampiran = $this->upload->data('file_name');
 
-            if (!$this->upload->do_upload('lampiran')) {
-                echo "download gagal";
-            } else {
-                $lampiran = $this->upload->data('file_name');
-            }
+            // if (!$this->upload->do_upload('lampiran')) {
+            //     echo "download gagal";
+            // } else {
+            //     $lampiran = $this->upload->data('file_name');
+            // }
 
             $data = array(
 
@@ -125,7 +152,7 @@ class Stockin_model extends CI_Model
                 'user_session' => $user_ses
             );
 
-            //print_r($data);
+            // print_r($data);
 
             $this->db->where('id', $id);
             $this->db->update('stockin', $data);

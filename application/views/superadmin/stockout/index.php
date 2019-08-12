@@ -10,9 +10,9 @@
                 <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
             </div>
         </div>
+
         <!-- start: search & user box -->
         <div class="header-right" style="padding-right: 2%;">
-
             <span class="separator"></span>
 
             <div id="userbox" class="userbox" style="margin-right: -2%;">
@@ -136,6 +136,40 @@
             </div>
 
             <!-- start: page -->
+            <!-- <div class="row">
+                <div class="col-xs-12">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            <div class="panel-actions">
+                                <a href="#" class="fa fa-caret-down"></a>
+                            </div>
+                            <h2 class="panel-title"><b>TOTAL STOCK MASUK</b></h2>
+                        </header>
+                        <div class="panel-body">
+                            <table id="datatable-default" class="table table-bordered table-stripped mb-none">
+                                <br />
+                                <thead>
+                                    <tr>
+                                        <th>Nama Barang</th>
+                                        <th>Total Masuk Barang</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    foreach ($stkbrg as $in) {
+                                        ?>
+                                                <tr class="gradeX">
+                                                    <td><?= $in->nama_barangs; ?></td>
+                                                    <td><?= $in->total; ?></td>
+                                                </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+            </div> -->
+            <br />
             <div class="row">
                 <div class="col-xs-12">
                     <section class="panel">
@@ -151,60 +185,73 @@
                             <?= $this->session->flashdata('message'); ?>
 
                             <table class="table table-bordered table-striped mb-none" id="datatable-default">
-                                <div class="row show-grid">
-                                    <div class="col-md-12">
-                                        <a href="<?php echo site_url('stockout/create'); ?>" type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-primary">
+                                <div class="row form-group">
+                                    <div class="col-md-5">
+                                        <a href="<?php echo site_url('stockout/create'); ?>" type="button" class="mb-xs ml-xs mt-xs mr-xs btn btn-sm btn-primary">
                                             <i class="fa fa-plus"></i>&nbsp;
                                             Stok Keluar
                                         </a>
+                                    </div>
+                                    <div class="col-md-7">
                                         <form action="<?php echo base_url("stockout/import"); ?>" method="post" enctype="multipart/form-data">
-                                            <a style="margin-left: 90%; bottom: " href="<?php echo base_url("excel/Stock_Out.xlsx"); ?>" class="mb-xs mt-xs mr-xs btn btn-sm btn-default">
+                                            <a style="margin-left: 55%; bottom: " href="<?php echo base_url("excel/Stock_Out.xlsx"); ?>" class="mb-xs mt-xs mr-xs btn btn-sm btn-default">
                                                 <i class="fa fa-print"></i>&nbsp;
-                                                Print
+                                                Export
                                             </a>
-                                            <a style="margin-left: 83%;" href="<?php echo base_url("stockout/form"); ?>" class="mb-xs mt-xs mr-xs btn btn-sm btn-success"><i class="fa fa-file-text"></i>&nbsp; Import Data Excel</a>
+                                            <a style="margin-right: 9%;" href="<?php echo base_url("stockout/form"); ?>" class="mb-xs mt-xs mr-xs btn btn-sm btn-success"><i class="fa fa-file-text"></i>&nbsp; Import Data Excel</a>
                                         </form>
                                     </div>
                                 </div>
+                                <br />
+                                <thead>
+                                    <tr>
+                                        <th>NO.</th>
+                                        <th>TANGGAL KELUAR</th>
+                                        <th>DIVISI</th>
+                                        <th>NOMOR SURAT JALAN</th>
+                                        <th>DIKELUARKAN OLEH</th>
+                                        <th>TUJUAN PROYEK</th>
+                                        <th>SUPIR</th>
+                                        <th>KODE BARANG</th>
+                                        <th>NAMA BARANG</th>
+                                        <th>SATUAN</th>
+                                        <th>JUMLAH</th>
+                                        <th>KETERANGAN</th>
+                                        <th>action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $no = 1;
+                                    foreach ($stockout as $out) {
+                                        ?>
+                                        <tr class="gradeX">
+                                            <td><?= $no;  ?></td>
+                                            <td><?= $out['dateout']; ?></td>
+                                            <td><?= $out['divisi']; ?></td>
+                                            <td><?= $out['no_suratjalan'] ?></td>
+                                            <td><?= $out['pengeluar'] ?></td>
+                                            <td><?= $out['lokasi'] ?></td>
+                                            <td><?= $out['supir'] ?></td>
+                                            <td><?= $out['kode_barang'] ?></td>
+                                            <td><?= $out['nama_barang'] ?></td>
+                                            <td><?= $out['satuan'] ?></td>
+                                            <td><?= $out['jumlah'] ?></td>
+                                            <td><?= $out['keterangan'] ?></td>
+                                            <td align="center">
+                                                <a href="<?php echo site_url('stockout/ngeprint'); ?>/?id=<?php echo $out['no_suratjalan']; ?>">
+                                                    <i class="fa fa-print"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <?php
+                                        $no++;
+                                    } ?>
+                                </tbody>
+                            </table>
                         </div>
+                    </section>
                 </div>
-                <br />
-                <thead>
-                    <tr>
-                        <th>Tanggal Keluar</th>
-                        <th>Nama Pengguna</th>
-                        <th>Lokasi</th>
-                        <th>No Surat Jalan</th>
-                        <th>action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    $no = 1;
-                    foreach ($stockout as $out) {
-                        ?>
-                        <tr class="gradeX">
-                            <td><?= $out['dateout']; ?></td>
-                            <td><?= $out['user_session'] ?></td>
-                            <td><?= $out['lokasi'] ?></td>
-                            <td><?= $out['no_suratjalan'] ?></td>
-                            <td align="center">
-                                <a href="<?php echo site_url('stockout/ngeprint'); ?>/?id=<?php echo $out['no_suratjalan']; ?>">
-                                    <i class="fa fa-print"></i>
-                                </a>
-                                <!-- </a> |
-                                                        <a href="<?= base_url(''); ?>stockout/edit/<?= $out['id_out']; ?>">
-                                                            <i class="fa fa-edit"></i>
-                                                        </a> |
-                                                        <a href="<?= base_url(''); ?>stockout/delete/<?php echo $out['id_out']; ?>" onclick="return confirm('Sure want delete this data?')">
-                                                            <i class="fa fa-trash-o"></i>
-                                                        </a> -->
-                            </td>
-                        </tr>
-                    <?php } ?>
-                </tbody>
-                </table>
-
             </div>
         </section>
     </div>

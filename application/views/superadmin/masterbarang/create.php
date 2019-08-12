@@ -153,7 +153,7 @@
                                     <input type="text" name="masterbarang" value="0" hidden>
                                     <div class="col-sm-6">
                                         <label>Kode Barang</label>
-                                        <input type="text" name="kode_barang" id="kode_barang" placeholder="ex : PSU" maxlgth="8en" class="form-control" onkeyup="this.value = this.value.toUpperCase();">
+                                        <input type="text" name="kode_barang" id="kode_barang" placeholder="ex : SDRS" class="form-control" onkeyup="this.value = this.value.toUpperCase();" maxlength="4" pattern=".{3,4}" required title="3-4 karakter">
                                         <?= form_error('kode_barang', '<small class="text-danger pl-3">', '</small>') ?>
                                     </div>
 
@@ -169,11 +169,11 @@
                                     <div class="col-sm-6">
                                         <label for="kategori">
                                             Kategori
+                                            <a href="#myModal1" class="modal-with-form btn-xs btn btn-warning">
+                                                <i class="fa fa-tag"></i>&nbsp;
+                                                Kategori
+                                            </a>
                                         </label>
-                                        <button type="button" class="mb-xs mt-xs mr-xs btn btn-xs btn-warning">
-                                            <i class="fa fa-tag"></i>
-                                            Tambah Kategori
-                                        </button>
                                         <select data-plugin-selectTwo class="form-control populate" id="kategori" name="kategori">
                                             <?php foreach ($kategori as $k) : ?>
                                                 <option value="<?= $k['nama_kategori'] ?>"><?= $k['nama_kategori'] ?></option>
@@ -183,7 +183,7 @@
                                     <div class="col-sm-6">
                                         <label for="satuan">
                                             Satuan
-                                            <a href="#modalForm" type="button" class="modal-with-form btn-xs btn btn-danger">
+                                            <a href="#modalSatuan" type="button" class="modal-with-form btn-xs btn btn-danger">
                                                 <i class="fa fa-pencil"></i>
                                                 Tambah Satuan
                                             </a>
@@ -195,26 +195,22 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-sm-12">
+                                <div class="row form-group">
+                                    <div class="col-sm-6">
                                         <label>Nomor Serial</label>
                                         <input type="text" name="nomor_serial" id="nomor_serial" placeholder="ex : 456CBA123" class="form-control" onkeyup="this.value = this.value.toUpperCase();">
                                         <?= form_error('nomor_serial', '<small class="text-danger pl-3">', '</small>') ?>
                                     </div>
-                                </div>
-                                <br />
-                                <div class="row">
-                                    <div class="col-sm-12">
+                                    <div class="col-sm-6">
                                         <label>Nomor Produk</label>
                                         <input type="text" name="nomor_produk" id="nomor_produk" placeholder="ex : AZS0091AS" class="form-control" onkeyup="this.value = this.value.toUpperCase();">
                                         <?= form_error('nomor_produk', '<small class="text-danger pl-3">', '</small>') ?>
                                     </div>
                                 </div>
-                                <br />
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <label>Harga Produk</label>
-                                        <input type="text" name="harga" placeholder="masukan harga barang" class="form-control">
+                                        <input type="number" name="harga" placeholder="masukan harga barang" class="form-control">
                                         <?= form_error('harga', '<small class="text-danger pl-3">', '</small>') ?>
                                     </div>
                                 </div>
@@ -222,7 +218,7 @@
                                 <div class="row form-group">
                                     <div class="col-sm-5">
                                         <label>Batas Peringatan</label>
-                                        <input type="text" name="batas" id="batas" placeholder="Ex : Qty stock <= 50" class="form-control">
+                                        <input type="number" name="batas" id="batas" placeholder="Ex : Qty stock <= 50" class="form-control" min="1">
                                         <?= form_error('batas', '<small class="text-danger pl-3">', '</small>') ?>
                                     </div>
                                     <div class="col-sm-6">
@@ -236,7 +232,6 @@
                                         </select>
                                     </div>
                                 </div>
-                                <br />
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <label>Keterangan Barang</label>
@@ -273,8 +268,63 @@
             </div>
             <!-- end: page -->
 
-            <!-- Modal Form -->
-            <div id="modalForm" class="modal-block modal-block-primary mfp-hide">
+            <!-- Modal Form Kategori -->
+            <div id="myModal1" class="modal-block modal-block-primary mfp-hide">
+                <section class="panel">
+                    <header class="panel-heading">
+                        <h2 class="panel-title">Kategori</h2>
+                    </header>
+                    <div class="panel-body">
+                        <form action="<?php echo site_url('masterbarang/createkategori'); ?>" method="post">
+                            <!-- <input type="text" value="1" hidden> -->
+                            <label>Kategori</label>
+                            <input type="text" name="nama_kategori" id="nama_kategori" placeholder="Masukan kategori" class="form-control" onkeyup="this.value = this.value.toUpperCase();">
+                            <?= form_error('nama_kategori', '<small class="text-danger pl-3">', '</small>') ?>
+                            <br />
+                            <button type="submit" name="btn" class="btn-sm btn btn-primary">Add</button>
+                        </form>
+                        <br />
+                        <table class="table table-bordered table-striped mb-none" id="datatable-tabletools">
+                            <br />
+                            <thead>
+                                <tr>
+                                    <th>Nama Kategori</th>
+                                    <th>action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $no = 1;
+                                foreach ($kategori as $a) {
+                                    ?>
+                                    <tr>
+                                        <td><?= $a['nama_kategori'] ?></td>
+                                        <td>
+                                            <a href="<?= base_url(''); ?>kategori/editmodal/<?= $a['id']; ?>">
+                                                <i class="fa fa-edit"></i>
+                                            </a> |
+                                            <a href="<?= base_url(''); ?>kategori/deletemodal/<?= $a['id']; ?>" onclick="return confirm('Sure want delete this data?')">
+                                                <i class="fa fa-trash-o"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <footer class="panel-footer">
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                <button class="btn btn-default modal-dismiss">Cancel</button>
+                            </div>
+                        </div>
+                    </footer>
+                </section>
+            </div>
+            <!-- End Modal Form Kategori -->
+
+            <!-- Modal Form Satuan -->
+            <div id="modalSatuan" class="modal-block modal-block-primary mfp-hide">
                 <section class="panel">
                     <header class="panel-heading">
                         <h2 class="panel-title">Satuan</h2>
@@ -325,6 +375,7 @@
                     </footer>
                 </section>
             </div>
+            <!-- End Modal Form Satuan -->
         </section>
     </div>
 

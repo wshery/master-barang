@@ -117,6 +117,7 @@ class Stockin extends CI_Controller
         $this->form_validation->set_rules('quantity_out', 'Jumlah Barang', 'trim|required');
         $this->form_validation->set_rules('lokasi', 'Lokasi', 'trim|required');
         $this->form_validation->set_rules('keterangan', 'Keterangan', 'trim|required');
+        // $this->form_validation->set_rules('lampiran', 'Lampiran', 'trim|required');
         // $this->load->view('templates/master_header', $data);
         $this->load->view('superadmin/stockin/create', $data);
         // $this->load->view('templates/sidebar', $data);
